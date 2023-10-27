@@ -9,7 +9,7 @@ function clearScreen() {
 
 function addNum(num) {
     currentNum += num;
-    document.querySelector('.screen').innerHTML = currentNum;
+    document.querySelector('.screen').innerHTML = 'Js계산기';
 }
 
 // function operator(op) {
