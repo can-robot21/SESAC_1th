@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        header {
+            background-color: black;
+            color: white;
+            padding: 10px;
+        }
+
+        ul {
+            list-style-type: none;
+        }
+
+        ul li {
+            display: inline-block;
+            margin-right: 20px;
+        }
+
+        ul li a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .submenu {
+            display: none;
+        }
+
+        .submenu ul {
+            display: block;
+            margin: 0;
+            padding: 0;
+        }
+
+        ul li:hover .submenu {
+            display: block;
+            position: absolute;
+            background-color: #333;
+            margin: 5px;
+        }
+
+        .submenu ul li {
+            display:block;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav><ul>
+            <li><a href="#">홈</a></li>
+            <li><a href="#">메뉴1</a>
+                <div class="submenu">
+                    <ul>
+                        <li><a href="#">서브메뉴 1-1</a></li>
+                        <li><a href="#">서브메뉴 1-2</a></li>
+                        <li><a href="#">서브메뉴 1-2</a></li>
+                    </ul>
+                </div>
+
+            </li>
+            <li><a href="#">메뉴2</a></li>
+            <li><a href="#">메뉴3</a></li>
+            <li><a href="#">로그인</a></li>
+        </ul></nav>
+    </header>
+    <main>
+        <h1>페이지제목</h1>
+        <p>페이지 내용</p>
+        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Reiciendis sapiente, quidem aspernatur iste illo placeat impedit eum odit perspiciatis quaerat nam distinctio voluptates voluptatum? Delectus tempore fugit voluptatem facere ipsum?</p>
+    </main>
+</body>
+</html>

@@ -1,0 +1,66 @@
+body {
+    background-color: rgb(255, 187, 0);
+}
+.login {
+    display: inline-flexbox;
+    padding: 10px;
+    width: 350px;
+    height: 320px;
+    border-radius: 10px;
+    border: 1px;
+    margin: 0 auto;
+    margin-top: 200px;
+    background-color: white;
+    text-align: center;
+}
+
+.login h1 {
+    color: rgb(160, 160, 160);
+    font-size: 30px;
+    text-align: left;
+    margin-left: 30px;
+}
+
+.login p {
+    text-decoration: none;
+    display: inline-block;
+    text-align: left;
+    color: grey;
+    text-align: left;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.login label {
+    width: 80%;
+    height: 40px;
+    display: inline-flexbox;
+    text-align: center;
+}
+
+.log {
+    width: 80%;
+    height: 30px;
+    display: block;
+    margin: 0 auto;
+    border: 0px;
+    background-color: rgb(233, 233, 233);
+}
+
+.logButton {
+    display: block;
+    width: 100%;
+    justify-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.login button {
+    display: inline;
+    border: 1px;
+    background-color: rgb(255, 208, 0);
+    border-radius: 3px;
+    width: 140px;
+    height: 30px;
+    margin: 3px;
+}

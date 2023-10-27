@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> JavaScript</title>
+</head>
+<body>
+    <H1>DOM/JS 이해하기</H1>
+    <P>DOM이 무엇인지 배워봅시다.</P>
+    <p id="demo"></p>
+    <button type="button" onclick="document.getElementById('demo').innerHTML = Date()">Click me</button>
+    <H1>버튼을 통한 값 변경</H1>
+    <div id="result">0</div>
+    <div>
+        <button onClick="number_inc()">증가</button>
+    </div>
+
+    <div>
+        <button onclinc="number_down">감소</button>
+    </div>
+
+    <script>
+        function number_inc() {
+            console.log("버튼 클릭");
+            result = document.getElementById('result').innerHTML;
+            console.log("result=", result);
+            new_result = parsheInt(result) +1;
+            console.log("new_result =", new_result);
+            document.getElementById('result').innerHTML = new_result;
+        }
+
+        function number_down() {
+            console.log("감소 버튼");
+            result = document.getElementById('result').innerHTML
+            new_result = parsheInt(result) -1;
+            console.log("new_result = ", new_result);
+            document.getElementById('result').innerHTML = new_result;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    padding: 10px;
+}
+
+#div_calendar {
+    float: left;
+    margin: auto;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+#table_main {
+    width: 80%;
+}
+
+#table_main th, td{
+    text-align: center;
+    vertical-align: top;
+}
+
+#table_title {
+    border-color: red;
+    width: 150;
+}
+
+#month_now {
+    display: table-cell; 
+    vertical-align: top;
+}
+
+#month_now {
+    font-size: 20px;
+    color: brown;
+}
+
+#table_body {
+    width: 100%;
+    align-items: center;
+    border: 1px;
+}
+
+#table_body th{
+    background-color: bisque;
+}
+
+#table_body tr+td{
+    background-color: blue;
+    color: red;
+}
+
+#table_body td{
+    text-align: center;
+}

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        header {
+            background-color: #5e5e5e;
+            color: beige;
+            text-align: center;
+            padding: 10px;
+        }
+        
+        nav {
+            float: left;
+            width: 30%;
+            background-color: rgb(235, 235, 235);
+            height: 300px;
+            padding: 20px;
+        }
+
+        article {
+            float: left;
+            width: 70%;
+            background-color: #ffffff;
+            height: 300px;
+            padding: 20px;
+        }
+        
+        footer{
+            background-color: black;
+            color: aliceblue;
+            text-align: center;
+            padding: 30px;
+        }
+
+        @media (max-width: 600px) {
+            
+            nav, article {
+                width: 100%;
+            }
+        }
+        
+        
+    </style>
+</head>
+<body>
+    <header>
+        <h1>cities</h1>
+    </header>
+    <section>
+        <nav>
+            <ul>
+                <li>Seoul</li>
+                <li>Busan</li>
+                <li>Seajong</li>
+                <li>Jeju</li>
+            </ul>
+        </nav>
+        <article>
+            <h1>Seoul</h1>
+            <p>서울에 대한 소개를 하는 본문</p>
+        </article>
+    </section>
+    <footer>
+        <p>여기는 copyright 또는 나만의 footer 추가</p>
+    </footer>
+</body>
+</html>

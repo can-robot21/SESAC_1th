@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+
+        div {
+            width: 100px;
+            height: 100px;
+            color: white;
+            position: relative;
+        }
+        /* 미션1 */
+        .div1 {
+            background-color: orange;
+        }
+
+        .div2 {
+            background-color: Red;
+            bottom: 50px;
+            z-index: 4;
+        }
+
+        .div3 {
+            background-color: blue;
+            bottom: 100px;
+            z-index: 3;
+        }
+
+        .div4 {
+            background-color: yellow;
+            bottom: 150px;
+        }
+
+    </style>
+    <title>Document</title>
+</head>
+<body>
+    <h1>Z-index를 통한 레이어 계층 변경</h1>
+    <div class="div1">Orange</div>
+    <div class="div2">Red</div>
+    <div class="div3">Blue</div>
+    <div class="div4">Yellow</div>
+</body>
+</html>
