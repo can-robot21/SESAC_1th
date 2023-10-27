@@ -5,7 +5,6 @@ let sumNum;
 function clearScreen() {
     currentNum = document.querySelector('.screen');
     currentNum.innerHTML = '';
-    break;
 }
 
 function addNum(num) {
@@ -13,12 +12,12 @@ function addNum(num) {
     document.querySelector('.screen').innerHTML = currentNum;
 }
 
-function operator(op) {
-    if (opertor !== '') {
-        preNum = currentNum;
-        currentNum = '';
-        opertor = op;
-        document.querySelector(.screen).classList.add(preNum)
+// function operator(op) {
+//     if (operator !== '') {
+//         preNum = currentNum;
+//         currentNum = '';
+//         opertor = op;
+//         document.querySelector('.screen').classList.add(preNum)
     
-    }
-}
+//     }
+// }
