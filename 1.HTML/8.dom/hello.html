@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <H1>핼로우JS</H1>
+    <!-- <button onclick="sayHello()">HelloJS</button> -->
+    <select id="fruit" onchange="fruitDisplay()">
+        <option value="apple">Apple</option>
+        <option value="banana">Banana</option>
+        <option value="orange">Orange</option>
+    </select>
+    <script>
+        function fruitDisplay() {
+            result = document.getElementById('fruit').value;
+            console.log(result);
+
+            switch (result) {
+                case "apple":
+                    document.write("사과가 선택되었습니다.");
+                    braek;
+                case "banana" :
+                    document.write("바나나가 선택되었습니다.");
+                    break;
+                case "orange":
+                    document.write("사과가 선택되었습니다.");
+                    break;
+            }
+        }
+
+
+    </script>
+</body>
+</html>

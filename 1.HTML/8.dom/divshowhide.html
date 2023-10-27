@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+<body>
+    <button onclick="showhide()">버튼</button>
+    <div id="myDiv">
+        여기에 원하는 내용을 입력하세요.
+    </div>
+    <script>
+        function showhide() {
+            var divElement = document.getElementById('myDiv');
+            divElement.style.display = "none";
+            // 미션1. 여기에 if 구문을 사용해서 show/hide 를 구현하시오.
+            if (divElement.style.display === 'none') {
+                divElement.style.display = 'none';
+            } else {
+                divElement.sytle.display = 'hide';
+            }
+        }
+    </script>
+</body>
+</html>
