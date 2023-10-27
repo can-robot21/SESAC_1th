@@ -3,13 +3,13 @@ let currentNum = '';
 let sumNum;
 
 function clearScreen() {
-    currentNum = document.querySelector('.screen');
-    currentNum.innerHTML = '';
+    currentNum = '';
+    document.querySelector('.screen').innerHTML = 'JS계산기';
 }
 
 function addNum(num) {
     currentNum += num;
-    document.querySelector('.screen').innerHTML = 'Js계산기';
+    document.querySelector('.screen').innerHTML = currentNum;
 }
 
 // function operator(op) {
