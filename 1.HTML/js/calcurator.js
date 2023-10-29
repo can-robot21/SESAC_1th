@@ -12,12 +12,14 @@ function addNum(num) {
     document.querySelector('.screen').innerHTML = currentNum;
 }
 
-// function operator(op) {
-//     if (operator !== '') {
-//         preNum = currentNum;
-//         currentNum = '';
-//         opertor = op;
-//         document.querySelector('.screen').classList.add(preNum)
+function operator(op) {
+    if (operator !== '') {
+        preNum = currentNum;
+        currentNum = '';
+        opertor = op;
+        document.querySelector('.screen').classList.add(preNum)
     
-//     }
-// }
+    } else {
+        console.log('sum');
+    }
+}
