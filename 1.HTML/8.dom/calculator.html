@@ -10,10 +10,10 @@
 <body>
     <div class="calcurator">
         <div class="screen">JS계산기</div>        
-        <input type="button" class="button" value="+" onclick="setOperator('+')">
-        <input type="button" class="button" value="-" onclick="setOperator('-')">
-        <input type="button" class="button" value="*" onclick="setOperator('*')">
-        <input type="button" class="button" value="/" onclick="setOperator('/')">
+        <input type="button" class="button" value="+" onclick="operator('+')">
+        <input type="button" class="button" value="-" onclick="operator('-')">
+        <input type="button" class="button" value="*" onclick="operator('*')">
+        <input type="button" class="button" value="/" onclick="operator('/')">
         <input type="button" class="button" value="7" onclick="addNum('7')">
         <input type="button" class="button" value="8" onclick="addNum('8')">
         <input type="button" class="button" value="9" onclick="addNum('9')">
@@ -27,5 +27,73 @@
         <input type="button" class="button" value="3" onclick="addNum('3')">
         <input type="button" class="button" value="0" onclick="addNum('0')">
     </div>
+
+    <!-- <script>
+        let preNum = 0;
+        let currentNum = '';
+        let sumNum = 0;
+        let operator;
+
+        function clearScreen() {
+            currentNum = '';
+            document.querySelector('.screen').innerHTML = 'JS계산기';
+        }
+
+        function addNum(num) {
+            if (operator === '') {
+                currentNum += num;
+            } else {
+                currentNum = num;
+                operator = '';
+            }
+            document.querySelector('.screen').innerHTML = currentNum;
+        }
+
+        function calculate() {
+            const num = parseFloat(currentNum);
+            if (!isNaN(num)) { // 숫자가 아닌 경우 연산하지 않도록 수정
+                switch (operator) {
+                    case '+':
+                        sumNum += num;
+                        break;
+                    case '-':
+                        sumNum -= num;
+                        break;
+                    case '*':
+                        sumNum *= num;
+                        break;
+                    case '/':
+                        if (num !== 0) { // 0으로 나누는 경우 처리
+                            sumNum /= num;
+                        } else {
+                            document.querySelector('.screen').innerHTML = 'Error';
+                            return;
+                        }
+                        break;
+                    default:
+                        sumNum = num;
+                        break;
+                }
+                currentNum = "";
+            }
+        }
+
+        function sum() {
+            calculate();
+            if (!isNaN(sumNum)) { // 숫자가 아닌 경우 NaN 출력 방지
+                document.querySelector('.screen').innerHTML = sumNum.toString();
+                currentNum = sumNum.toString();
+                sumNum = 0; // 연산 결과 초기화
+            }
+        }
+
+        function setOperator(op) {
+            if (currentNum !== '') {
+                calculate();
+                currentNum = '';
+            }
+            operator = op;
+        }
+    </script> -->
 </body>
 </html>
