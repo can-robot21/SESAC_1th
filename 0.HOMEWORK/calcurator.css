@@ -21,6 +21,8 @@ body {
     align-items: center;
     grid-column: span 4;
     background-color: white;
+    color: white;
+    background-color: black;
 }
 
 .button {
@@ -32,9 +34,11 @@ body {
     justify-items: center;
     line-height: 80px;
     border: 0;
+    color: white;
+    background-color: black;
 }
 
 .button:nth-child(13) {
-    background: rgb(255, 200, 137);
+    background: red;
 }
 
