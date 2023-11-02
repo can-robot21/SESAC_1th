@@ -47,6 +47,7 @@ function clearScreen() {
 
 function sum() {
   inputNum = parseFloat(currentNum);
+  console.log('직전 연산자:',preOp);
 
   if (sumNum !== 0) {
     switch (preOp) {
@@ -67,6 +68,5 @@ function sum() {
 
   document.querySelector(".screen").innerHTML = sumNum;
   currentNum = "";
-  sumNum = 0;
-  num = 0;
+  current = 'JS 계산기';
 }
