@@ -13,17 +13,23 @@ const fs = require('fs');
 // 파일 쓰기
 const content = "파일에 쓰고 싶은 내용";
 
-// fs.writeFile('example.txt','utf8', (err, data) => {
+fs.writeFile('example.txt','utf8', (err, data) => {
+    if (err) {
+            console.error('파일을 쓰는데 오류가 발생했습니다.', err);
+    return;
+    }
+    console.log('파일에 결과가 성공적으로 기록되었습니다.');
+
+} )
+
+// 다른 방식
+// const fs = require('fs');
+
+// fs.writeFile('example.txt', '내용을 쓸 문자열', 'utf8', function (err) {
 //     if (err) {
-//             console.error('파일을 쓰는데 오류가 발생했습니다.', err);
-//     return;
+//         console.error('파일을 쓰는데 오류가 발생했습니다.', err);
+//         return;
 //     }
 //     console.log('파일에 결과가 성공적으로 기록되었습니다.');
+// });
 
-// } )
-
-fs.readdir('./1.builtin', (err, fileList) => {
-
-            console.log(fileList);
-
-})

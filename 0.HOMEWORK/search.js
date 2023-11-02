@@ -16,6 +16,8 @@ function searchDic(word1, word2) {
   }
 }
 
+// class 호출해 검색하기
+
 // 배열입력
 let wordList = [20, 15, 'seoul', 30, 'file1', 45, 2, 100];
 let wordA = "file1";
