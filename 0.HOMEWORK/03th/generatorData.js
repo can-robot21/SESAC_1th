@@ -59,21 +59,21 @@ function generateUserNo() {
 function hexRandom() {
     const hexNum = '1234567890abcdef';
     const indexNum = Math.floor(Math.random() * hexNum.length);
-    return hexRandom(indexNum);
+    return hexNum[indexNum];
 }
 
+
 // 렌덤인덱스 2. 입력된 숫자배열만큼의 조합생성(수정중....)
-function arrayPassword(arraryNum) {
-    let password = [];
-    for (i=0; i < arraryNum.length; i++) {
+function arrayPassword(arrayNum) {
+    let passWord = [];
+    for (i=0; i < arrayNum.length; i++) {
         let arrayWord = '';
-        for (y=1; y <= arrayNum[i].length; y++) {
+        for (y=1; y <= arrayNum[i]; y++) {
             arrayWord += hexRandom();
-            console.log(arrayWord);
         }
-        console.log(arrayWord[i]);
+        passWord.push(arrayWord);
     }
-    return password.join('-');
+    return passWord.join('-');
 }
 
   
