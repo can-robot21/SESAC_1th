@@ -15,7 +15,19 @@ function generateBirthdate() {
     const month = Math.floor(Math.random() * 12) + 1;
     const day = Math.floor(Math.random() * 28) + 1;
 
-    return `${year}-${month}-${day}`;
+    // 만나이 구하기
+    const today = new Date();
+    const birth = new Date(year, month, day);
+    let age = today.getYear() - birth.getYear();
+    const m = today.getMonth() - birth.getMonth();
+    if (m < 0) {
+        age --;
+    }
+
+    let birthDate = [String(year), String(month).padStart(2,"0"), String(day).padStart(2,"0")].join('-');
+    let birthDay = [birthDate, age];
+
+    return birthDay;
 }
 
 
@@ -41,11 +53,13 @@ function generateAddress() {
 
 // 사용자  uuid  생성 API 활용
 // function generateUserId = 
-function uuidv4() {
-    return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
-      (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
-    );
-  }
+// function uuidv4() {
+//     return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+//       (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+//     );
+// }
+
+// console.log('uuid 생성함수 사용:', uuidv4());
 
   // random 생성
 
@@ -64,7 +78,7 @@ function hexRandom() {
 
 
 // 렌덤인덱스 2. 입력된 숫자배열만큼의 조합생성(수정중....)
-function arrayPassword(arrayNum) {
+function arrayIndex(arrayNum) {
     let passWord = [];
     for (i=0; i < arrayNum.length; i++) {
         let arrayWord = '';
@@ -77,18 +91,11 @@ function arrayPassword(arrayNum) {
 }
 
   
-let passArr = arrayPassword([8, 4, 4, 12]); 
-console.log(passArr);
+let userID = arrayIndex([8, 4, 4, 12]); 
+let birthData = generateBirthdate();
+let userData = [userID, generateName(), generateGender(), birthData[0], birthData[1], generateAddress()].join(',')+'\n';
 
-// console.log(generateUserNo(passArr));
-// console.log(uuidv4(), 'uuid');
-
-console.log(generateName());
-console.log(generateBirthdate());
-console.log(generateGender());
-console.log(generateAddress());
-
-
+console.log(userData);
 
 
 
