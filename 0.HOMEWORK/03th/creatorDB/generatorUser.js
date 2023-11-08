@@ -1,5 +1,8 @@
+// User data - 1,000 명 생성
+
 const fs = require('fs');
-const GenerateNo = require('./generateNo')
+const generateNo = require('./generateNo')
+
 // const GenerateAdd = require('./generateAdd');
 
 let userData = '';
@@ -69,62 +72,34 @@ function generateAddress() {
 // csv 에 가상의 유저데이터 저장하기
 // 입력된 숫자만큼의 데이터 생성 후  csv 생성
 
-function saveCsv(userData, uNum) {
+function makeCsv(uNum) {
     // csv 파일로 가상의 데이터 생성
     let csvData = '';
+    let sumId = [];
 
     for (u = 0; u < uNum; u++) {
-        let userID = GenerateNo.arrayIndex([8, 4, 4, 12]);
+        let userId = generateNo.arrayIndex([8, 4, 4, 12]);
         let birthData = generateBirthdate();
-        let newUser = [userID, generateName(), generateGender(), birthData[0], birthData[1], generateAddress()].join(',');
+        let newUser = [userId, generateName(), generateGender(), birthData[0], birthData[1], generateAddress()].join(',');
         csvData += newUser + '\n';
+        sumId[u] = userId;
     }
 
-    fs.writeFile('user.csv', csvData, 'utf-8', (err) => {
-        if (err) {
-            console.log('데이터 기록 중 에러가 발생했습니다.');
-        } else {
-            console.log('정상적으로 사용자 데이터가 생성되었습니다.')
-        }
-    })
+    const sumCsv = [csvData, sumId];
+    return sumCsv;
+
 }
 
+let randomIndex = makeCsv(10);
+console.log('======================= csv 저장용 n개의 User 데이터와 userIndex =============================')
+console.log(randomIndex);
 
-saveCsv(userData, 10);
+// csv 에 쓰기
 
-
-
-// ===== csv 파일 테스트하기
-
-// 저장된 csv 읽어서 배열로 저장하기
-
-function readCsv(file, callback) {
-    fs.readFile(file, 'utf8', (err, data) => {
-        if (err) {
-            console.log('csv 파일 읽기에 에러가 발생했습니다.');
-            callback((err, null))
-            return;
-        }
-        // 줄 단위로 데이터 나누기
-        const pullData = data.split('\n');
-        console.log(pullData);
-        callback(null, pullData);
-    });
-}
-
-let filedata = [];
-readCsv('user.csv', (err, data) => {
+fs.writeFile('user.csv', randomIndex[0], 'utf-8', (err) => {
     if (err) {
-        console.log('에러: ',err)
-        return;
+        console.log('데이터 기록 중 에러가 발생했습니다.');
+    } else {
+        console.log('정상적으로 사용자 데이터 파일에 생성되었습니다.')
     }
-    console.log('============== cvs 파일읽고 배열로 저장&출력 ===============');
-    console.log(data);
 });
-
-filedata = readCsv;
-console.log(filedata);
-
-// "Id,Name,Gender,Age,Birthdate,Address
-// 0a497257-2b1a-4836-940f-7b95db952e61,강준영,Male,28,1994-09-08,대구 강서구 59길 66
-// 3e00736a-5978-48ee-9aa9-366b0c4ed0b8,장승현,Female,43,1979-11-05,서울 강남구 88길 78

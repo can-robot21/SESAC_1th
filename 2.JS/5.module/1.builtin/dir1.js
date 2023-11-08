@@ -37,12 +37,12 @@ function checkFile(filePath) {
 }
 
 function checkDirechtory(filePath) {
-    fs.stat((filePath, (err, stats) =>{
+    fs.stat(filePath, (err, stats) =>{
         if (err) {
-            console.
+            console.log('에러가 발행했습니다.');
         }
     })
-} 
+};
 
 
 // const { dir } = require('console');

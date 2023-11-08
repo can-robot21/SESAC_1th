@@ -1,7 +1,7 @@
-// 스토어 데이터 생성
+// store data 100개 생성
 
 const fs = require ('fs');
-const GenerateNo = require('./GenerateNo');
+const GenerateNo = require('./generateNo');
 const GenerateAdd = require('./GenerateAdd');
 
 let userData = '';
@@ -36,27 +36,38 @@ console.log(storeAdd);
 
 // // 입력된 숫자만큼의 데이터 생성 후  csv 생성
 
-function saveCsv(uNum) {
+function makeStore(uNum) {
     // csv 파일로 가상의 데이터 생성
-    let csvData = '';
+    let csvStore = '';
+    let oneStore = [];
 
     for (u = 0; u < uNum; u++) {
         let newStoreId = GenerateNo.arrayIndex([8, 4, 4, 12]);
         let storeInfo = storeName();
-        let newStore = [storeId, storeInfo[0], storeInfo[1], GenerateAdd.address()].join(',');
+        let newStore = [newStoreId, storeInfo[0], storeInfo[1], GenerateAdd.address()].join(',');
+        csvStore += newStore + '\n';
+        oneStore[u] = newStoreId;
 
-        console.log(newStore);
-        csvData += newStore + '\n';
     }
 
-    fs.writeFile('store.csv', csvData, 'utf-8', (err) => {
-        if (err) {
-            console.log('데이터 기록 중 에러가 발생했습니다.');
-        } else {
-            console.log('정상적으로 사용자 데이터가 생성되었습니다.')
-        }
-    })
+    const sumIndex = [csvStore,oneStore];
+    return sumIndex;
+
 }
+let indexStore = makeStore(10);
+console.log(indexStore);
+
+// csv 에 쓰기
+
+fs.writeFile('store.csv', indexStore[0], 'utf-8', (err) => {
+    if (err) {
+        console.log('데이터 기록 중 에러가 발생했습니다.');
+    } else {
+        console.log('정상적으로 매장 데이터 파일이 생성되었습니다.')
+    }
+});
 
 
-saveCsv(10);
+
+
+module.exports = { makeStore };
