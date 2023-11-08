@@ -1,3 +1,5 @@
+// UUID 형식의 랜덤번호 생성
+
 // 렌덤인덱스 1. 16진수 random 생성-1
 
 function generateNo() {
@@ -12,7 +14,6 @@ function generateNo() {
 //     const indexNum = Math.floor(Math.random() * hexNum.length);
 //     return hexNum[indexNum];
 // }
-
 
 // 렌덤인덱스 2. 입력된 숫자배열만큼의 조합생성
 function arrayIndex(arrayNum) {
