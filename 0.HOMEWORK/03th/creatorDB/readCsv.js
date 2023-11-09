@@ -1,19 +1,18 @@
 // ','과 '\n'으로 만들어진 Csv 읽기와 n번째 행 데이터 랜덤 출력하기
 const fs = require('fs');
 
-function readCsv(file, callback) {
-    fs.readFile(file, 'utf8', (err, data) => {
-        if (err) {
-            console.log('csv 파일 읽기에 에러가 발생했습니다.');
-            callback((err, null))
-            return;
-        }
-        console.log('csv 파일을 정상적으로 호출했습니다.')
-        // 줄 단위로 데이터 나누기
-        const pullData = data.split('\n');
-        callback(null, pullData);
-    });
-}
+ function readCsvSync(filename) {
+    try {
+        const data = fs.readFileSync(filename, 'utf8');
+        const outputData = data.split('\n');
+        return outputData;
+    } catch (err) {
+        console.log('파일 읽기 중 에러가 발생했습니다.');
+        throw err;
+    }
+ }
+
+
 
 // 데이터에서 뽑아서 저장한 배열에서 n 번째 (key) 데이터만 새로운 배열로 저장
 
@@ -37,17 +36,5 @@ function pickData(data,nth) {
     }
 }
 
-// 호출방식
-// readCsv('user.csv', (err, data) => {
-//     if (err) {
-//         console.log('에러: ', err)
-//         return;
-//     }
 
-//     let fileData = data;
-//     let nthData = [];
-//     nthData = pickData(fileData, 0);
-// });
-
-
-module.exports = { readCsv, pickData };
+module.exports = { readCsvSync, pickData };

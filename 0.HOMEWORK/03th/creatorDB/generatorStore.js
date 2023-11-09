@@ -30,14 +30,13 @@ let storeAdd = GenerateAdd.address();
 
 
 // store 데이터
-console.log(storeId);
+
 storeName();
-console.log(storeAdd);
 
 // // 입력된 숫자만큼의 데이터 생성 후  csv 생성
 
 function makeStore(uNum) {
-    // csv 파일로 가상의 데이터 생성
+    // 가상의 데이터 생성 후 csv 파일로 ...
     let csvStore = '';
     let oneStore = [];
 
@@ -66,7 +65,6 @@ fs.writeFile('store.csv', indexStore[0], 'utf-8', (err) => {
         console.log('정상적으로 매장 데이터 파일이 생성되었습니다.')
     }
 });
-
 
 
 

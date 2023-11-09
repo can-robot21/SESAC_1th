@@ -5,29 +5,67 @@
 
 const fs = require('fs');
 const generateNo = require('./generateNo');
-const { removeAllListeners } = require('process');
+
 
 
 // Item id 랜덤 생성
-const itemId = generateNo.arrayIndex([8, 4, 4,4, 12]);
-console.log('제품 ID:' ,itemId);
+const itemId = generateNo.arrayIndex([8, 4, 4, 4, 12]);
 
-// 제품명, 제품타입 생성
-const allItem = (['Americano','CafeLatte', 'Espresso','Cappuccino','VanillaLatte',
-'dolceLatte','CapeMoka','ChocoLatte', 'IceHazelnuts', 'CafeMocha',
-'MilkTea','HoneyBlack', 'EarlGray', 'MintTea','GreenTeaLatte',
-'CheeseCake','Castella','ChocoCake','Tiramisu','EggTart']);
-const allType = (['Coffee', 'Tea', 'Cake']);
+// 제품명 + 제품타입 생성
+function makeItem() {
+    const allItem = (['Americano','CafeLatte', 'Espresso','Cappuccino','VanillaLatte',
+    'dolceLatte','CapeMoka','ChocoLatte', 'IceHazelnuts', 'CafeMocha',
+    'MilkTea','HoneyBlack', 'EarlGray', 'MintTea','GreenTeaLatte',
+    'CheeseCake','Castella','ChocoCake','Tiramisu','EggTart']);
+    const allType = (['Coffee', 'Tea', 'Cake']);
+    
+    let itemName = allItem[Math.floor(Math.random()*allItem.length)];  
+    let itemType = '';
+    
+    const typeCoffee = ['Americano','CafeLatte', 'Espresso','Cappuccino','VanillaLatte', 'dolceLatte','CapeMoka','ChocoLatte', 'IceHazelnuts', 'CafeMocha'];
+    const typeTea =['MilkTea','HoneyBlack', 'EarlGray', 'MintTea','GreenTeaLatte']; 
+    const typeCake = ['CheeseCake','Castella','ChocoCake','Tiramisu','EggTart']; 
 
-// 제품이름 + 제품타입
-let itemName = allItem[Math.floor(Math.random()*allItem.length)];               
-console.log(itemName);
-let itemtype = allType[Math.floor(Math.random()*allType.length)];
+        if (typeCoffee.includes(itemName)) {
+            itemType = 'Coffee';
+        } else if (typeTea.includes(itemName)) {
+            itemType = 'Tea';
+        } else if (typeCake.includes(itemName)) {
+            itemType = 'Cake';
+        }
 
-// unitPrice
-let allPrice = [3000, 3500, 4500, 5000, 5500, 6000, 6500];
-let itemPrice = allPrice[Math.floor(Math.random()*allPrice.length)];
-console.log(itemPrice);
+    const item = [itemName, itemType]
+    return item;
+
+}
 
 
+// csv 저장을 위한 파일결합...
+function makeCsv(num) {
+    let csvItem = ''; // csvItem - csv 저장용 결합 데이타
+    let oneItem = []; // oneItem - 상품Index, 데이터간 결합에 사용
+    let allPrice = [3000, 3500, 4500, 5000, 5500, 6000, 6500];
+    
+    for (let i=0; i < num; i++ ) {
+        const itemId = generateNo.arrayIndex([8, 4, 4, 4, 12]);
+        const item = makeItem()
+        const itemPrice = allPrice[Math.floor(Math.random()*allPrice.length)];   
+        let newItem = [itemId, item[0], item[1], itemPrice].join(',');
+        csvItem += newItem + ['\n'];
+        oneItem.push(itemId);
+    }
+    return [csvItem, oneItem];
+}
 
+itemIndex = makeCsv(10);
+console.log(itemIndex);
+
+// 압축된 데이타 csv 파일로 저장하기
+
+fs.writeFile('item.csv', itemIndex[0], 'utf-8', (err) => {
+    if (err) {
+        console.log('데이터 기록 중 에러가 발생했습니다.');
+    } else {
+        console.log('정상적으로 매장 데이터 파일이 생성되었습니다.')
+    }
+});
