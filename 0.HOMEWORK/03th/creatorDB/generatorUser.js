@@ -96,7 +96,7 @@ console.log(randomIndex);
 
 // csv 에 쓰기
 
-fs.writeFile('user.csv', randomIndex[0], 'utf-8', (err) => {
+fs.writeFile('./csv/user.csv', randomIndex[0], 'utf-8', (err) => {
     if (err) {
         console.log('데이터 기록 중 에러가 발생했습니다.');
     } else {

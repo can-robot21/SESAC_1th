@@ -38,18 +38,18 @@ storeName();
 function makeStore(uNum) {
     // 가상의 데이터 생성 후 csv 파일로 ...
     let csvStore = '';
-    let oneStore = [];
+    let sumId = [];
 
     for (u = 0; u < uNum; u++) {
         let newStoreId = GenerateNo.arrayIndex([8, 4, 4, 12]);
         let storeInfo = storeName();
         let newStore = [newStoreId, storeInfo[0], storeInfo[1], GenerateAdd.address()].join(',');
         csvStore += newStore + '\n';
-        oneStore[u] = newStoreId;
+        sumId[u] = newStoreId;
 
     }
 
-    const sumIndex = [csvStore,oneStore];
+    const sumIndex = [csvStore,sumId];
     return sumIndex;
 
 }
@@ -58,7 +58,7 @@ console.log(indexStore);
 
 // csv 에 쓰기
 
-fs.writeFile('store.csv', indexStore[0], 'utf-8', (err) => {
+fs.writeFile('./csv/store.csv', indexStore[0], 'utf-8', (err) => {
     if (err) {
         console.log('데이터 기록 중 에러가 발생했습니다.');
     } else {

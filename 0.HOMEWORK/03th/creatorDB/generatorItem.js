@@ -62,7 +62,7 @@ console.log(itemIndex);
 
 // 압축된 데이타 csv 파일로 저장하기
 
-fs.writeFile('item.csv', itemIndex[0], 'utf-8', (err) => {
+fs.writeFile('./csv/item.csv', itemIndex[0], 'utf-8', (err) => {
     if (err) {
         console.log('데이터 기록 중 에러가 발생했습니다.');
     } else {

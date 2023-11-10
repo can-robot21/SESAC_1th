@@ -6,25 +6,60 @@
 const fs = require('fs');
 const generateNo = require('./generateNo');
 const readCsv = require('./readCsv');
-
-const orderFile = order.csv;
-const itemFile = 
+const generatorOrder = require('./generatorOrder');
+const generatorItem = require('./generatorItem');
 
 
 // 주문 제품 index 생성
-let orderItemNo = generateNo.arrayIndex([8,4,4,4,12]);
 
 // orderItem.css 에서 OrderItem 랜덤출력 후 저장
-
-
 // orderItemId.csv 에서 orderItem의 아이디값 랜덤 출력
+// fs 함수의 readFileSync 사용 데이터 동기처리
+// const orderFile = order.csv;
+
+// makeCsv 모듈 호출하던 방식을 데이터 호출을 위한 동기처리에 맞줘
+// try ~ catch 에 직접 데이터 결합 후 저장까지 처리
+
+const itemFile = './csv/item.csv';
+const orderFile = './csv/order.csv';
+const itemNth = 0;
+const orderNth = 0;
+let orderItemIndex = [];
+
+
+try {
+    const orderData = readCsv.readCsvSync(orderFile, 'utf8');
+    randomOrder = readCsv.pickData(orderData, orderNth)
+    const itemData = readCsv.readCsvSync(itemFile, 'utf8');
+    randomItem = readCsv.pickData(itemData, itemNth);
+    
+    let csvOrderItem = '';
+    let oneItem = [];
+    let sumOrderId = [];
+    let nNum = 10;
+    let sumId = [];
+    let saveName = './csv/orderItem.csv';
+    
+    for ( let i =0; i <nNum; i++ ) {
+        let orderItemNo = generateNo.arrayIndex([8,4,4,4,12]);
+        oneItem = [orderItemNo, randomOrder, randomItem].join(',');
+        csvOrderItem += oneItem + ('\n');
+        sumId[i] = orderItemNo;
+    }
+    const orderItemIndex = [ csvOrderItem, sumId];
+    // console.log('저장을 위한 orderItem.cvs', orderItemIndex);
+
+    fs.writeFileSync(saveName, orderItemIndex[0], 'utf8');
+    console.log('데이터 결합 후 정상적으로 저장되었습니다. ')
+
+} catch (error) {
+    console.log('데이터 전환 과정에 에러가 발생했습니다.');
+    console.log('Error occurred : ', error.message);
+    console.log('Error name :', error.name);
+    console.log('Error trace :', error.stack);
+
+}
+
 
 
 // csv 파일 저장을 위한 데이터 결합 및 데이터 
-
-
-
-
-
-
-console.log('주문생산제품no : ', orderItemNo);

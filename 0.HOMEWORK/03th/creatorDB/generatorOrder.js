@@ -6,38 +6,67 @@ const generateNo = require('./generateNo');
 const generateDay = require('./generateDay');
 const readCsv = require('./readCsv');
 
-let randomStore = [];
-let randomUser = [];
+// let randomStore = [];
+// let randomUser = [];
 
 // order index 생성
-let orderId = generateNo.arrayIndex([8, 4, 4, 12]);
 
 
 // 날짜 생성기로 orderAt 생성 후 입력
-let orderAt = generateDay.oneDay();
 
 // store 리스트에서 StoreId 랜덤으로 뽑아서 입력
 // User 리스트에서 userID 랜덤으로 뽑아서 입력
-// readFileSync 활동한 테이타 동기 처리방식
-// readFileSync 를 통한 동기식 처리방식
-const storeFile = 'store.csv';
-const userFile = 'user.csv'
+// readFileSync 활동한 테이타 동기 처리
+const storeFile = './csv/store.csv';
+const userFile = './csv/user.csv'
 const storeNth = 0; 
 const userNth = 0;
+let orderIndex = [];
+
+// function makeCsv(someData, nNum) {
+//     let csvOrder = '';
+//     let oneOrder = [];
+//     let sumId = [];
+    
+//     for ( let i=0; i < nNum; i++ ) {
+//         let orderId = generateNo.arrayIndex([8, 4, 4, 12]);
+//         let orderAt = generateDay.oneDay();    
+//         oneOrder =  [orderId, orderAt[0],randomStore, randomUser].join(',');
+//         csvOrder += oneOrder+('\n');
+//         sumId[i] = orderId;
+//     }
+//     const sumCsv = [csvOrder, sumId];
+//     return sumCsv;
+// }
+
+// makeCsv 모듈 호출하던 방식을 데이터 호출을 위한 동기처리에 맞줘
+// try ~ catch 에 직접 데이터 결합 후 저장까지 처리
 
 try {
     const storeData = readCsv.readCsvSync(storeFile,'utf8');
-    randomStore = readCsv.pickData(storeData, storeNth);
+    let randomStore = readCsv.pickData(storeData, storeNth);
     
     const userData = readCsv.readCsvSync(userFile, 'utf8');
-    randomUser = readCsv.pickData(userData, userNth);
+    let randomUser = readCsv.pickData(userData, userNth);
     
-    console.log('Store : ', storeData);
-    console.log('User :', userData);
-    console.log('selected Store:', randomStore);
-    console.log('selected User:', randomUser);
+    let csvOrder = '';
+    let oneOrder = [];
+    let sumId = [];
+    let nNum = 10;
     
-} catch {
+    for ( let i=0; i < nNum; i++ ) {
+        let orderId = generateNo.arrayIndex([8, 4, 4, 12]);
+        let orderAt = generateDay.oneDay();    
+        oneOrder =  [orderId, orderAt[0],randomStore, randomUser].join(',');
+        csvOrder += oneOrder+('\n');
+        sumId[i] = orderId;
+    }
+    const orderIndex = [csvOrder, sumId];
+    
+    fs.writeFileSync('./csv/order.csv', orderIndex[0], 'utf8');
+    console.log('데이터가 파일로 정상적으로 저장되었습니다.');
+    
+} catch (error) {
     console.log('데이타 처리과정에 에러가 발생했습니다.', error);
 }
 
@@ -84,8 +113,3 @@ try {
 //     return nthData;
 // })
 // --->
-
-console.log('주문ID:', orderId);
-console.log('주문일:', orderAt[0]);
-console.log('StoreID:', randomStore);
-console.log('userID:', randomUser);
