@@ -21,4 +21,11 @@ function oneDay() {
     return theDay;
 }
 
+function oneDate() {
+    const hour = Math.floor((Math.random) * 24);
+    const minute = Math.floor((Math.random) * 60);
+    const second = Math.floor((Math.random) * 60);
+    
+}
+
 module.exports = {oneDay}

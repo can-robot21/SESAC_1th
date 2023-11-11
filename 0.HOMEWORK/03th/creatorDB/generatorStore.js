@@ -53,8 +53,19 @@ function makeStore(uNum) {
     return sumIndex;
 
 }
-let indexStore = makeStore(10);
-console.log(indexStore);
+
+// argumnets 로 숫자 입력받기
+
+const argNum = parseInt(process.argv[2]);
+let indexStore = makeStore(argNum);
+
+if ( !isNaN(argNum)) {
+    console.log(indexStore);
+} else {
+    console.log('please input Number!!');
+    process.exit(1);
+}
+
 
 // csv 에 쓰기
 
