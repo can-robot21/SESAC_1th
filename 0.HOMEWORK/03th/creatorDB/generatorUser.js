@@ -90,9 +90,19 @@ function makeCsv(uNum) {
 
 }
 
-let randomIndex = makeCsv(10);
-console.log('======================= csv 저장용 n개의 User 데이터와 userIndex =============================')
-console.log(randomIndex);
+// arguments 로 입력받은 숫자로 데이터 지정
+
+const argNum = parseInt(process.argv[2]);
+let randomIndex;
+
+if ( !isNaN(argNum)) {
+    randomIndex = makeCsv(argNum);
+    console.log(randomIndex);
+} else {
+    console.log('please insert Number');
+    process.exit(1);
+}
+
 
 // csv 에 쓰기
 

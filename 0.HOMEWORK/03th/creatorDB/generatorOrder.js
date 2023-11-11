@@ -6,11 +6,6 @@ const generateNo = require('./generateNo');
 const generateDay = require('./generateDay');
 const readCsv = require('./readCsv');
 
-// let randomStore = [];
-// let randomUser = [];
-
-// order index 생성
-
 
 // 날짜 생성기로 orderAt 생성 후 입력
 
@@ -44,27 +39,39 @@ let orderIndex = [];
 
 try {
     const storeData = readCsv.readCsvSync(storeFile,'utf8');
-    let randomStore = readCsv.pickData(storeData, storeNth);
     
     const userData = readCsv.readCsvSync(userFile, 'utf8');
-    let randomUser = readCsv.pickData(userData, userNth);
     
     let csvOrder = '';
     let oneOrder = [];
     let sumId = [];
-    let nNum = 10;
     
-    for ( let i=0; i < nNum; i++ ) {
-        let orderId = generateNo.arrayIndex([8, 4, 4, 12]);
-        let orderAt = generateDay.oneDay();    
-        oneOrder =  [orderId, orderAt[0],randomStore, randomUser].join(',');
-        csvOrder += oneOrder+('\n');
-        sumId[i] = orderId;
+    let indexOreder;
+    const argNum = parseInt(process.argv[2]);
+    
+    if (!isNaN(argNum)) {
+        for ( let i=0; i < argNum; i++ ) {
+            let randomStore = readCsv.pickData(storeData, storeNth);
+            let randomUser = readCsv.pickData(userData, userNth);
+
+            let orderId = generateNo.arrayIndex([8, 4, 4, 12]);
+            let orderAt = generateDay.oneDay();    
+            oneOrder =  [orderId, orderAt[0],randomStore, randomUser].join(',');
+            csvOrder += oneOrder+('\n');
+            sumId[i] = orderId;
+        }
+        orderIndex = [csvOrder, sumId];
+    } else {
+        console.log('Please insert Number');
+        process.exit(1)
     }
-    const orderIndex = [csvOrder, sumId];
     
-    fs.writeFileSync('./csv/order.csv', orderIndex[0], 'utf8');
-    console.log('데이터가 파일로 정상적으로 저장되었습니다.');
+    if (orderIndex && orderIndex[0] ) {
+        fs.writeFileSync('./csv/order.csv', orderIndex[0], 'utf8');
+        console.log('데이터가 파일로 정상적으로 저장되었습니다.');
+    } else {
+        console.log('데이터 생성에 과정에 에러가 발생했습니다.');
+    }
     
 } catch (error) {
     console.log('데이타 처리과정에 에러가 발생했습니다.', error);
