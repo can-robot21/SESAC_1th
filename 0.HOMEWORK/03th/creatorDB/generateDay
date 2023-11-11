@@ -1,8 +1,8 @@
 // 가상 일자 생성
 
 // 생년월일 생성
-function oneDay() {
-    const year = Math.floor(Math.random() * 100) + 1900;
+function oneDay(period) {
+    const year = Math.floor(Math.random() * period) + (2023-period);
     const month = Math.floor(Math.random() * 12) + 1;
     const day = Math.floor(Math.random() * 28) + 1;
 
@@ -25,7 +25,7 @@ function oneDate() {
     const hour = Math.floor((Math.random) * 24);
     const minute = Math.floor((Math.random) * 60);
     const second = Math.floor((Math.random) * 60);
-    
+
 }
 
 module.exports = {oneDay}

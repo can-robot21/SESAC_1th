@@ -45,6 +45,8 @@ try {
     let csvOrder = '';
     let oneOrder = [];
     let sumId = [];
+
+    // argumnets 사용으로 입력된 숫자를 기본으로 데이터 생성
     
     let indexOreder;
     const argNum = parseInt(process.argv[2]);
@@ -55,12 +57,13 @@ try {
             let randomUser = readCsv.pickData(userData, userNth);
 
             let orderId = generateNo.arrayIndex([8, 4, 4, 12]);
-            let orderAt = generateDay.oneDay();    
+            let orderAt = generateDay.oneDay(2);    
             oneOrder =  [orderId, orderAt[0],randomStore, randomUser].join(',');
             csvOrder += oneOrder+('\n');
             sumId[i] = orderId;
         }
         orderIndex = [csvOrder, sumId];
+        console.log(orderIndex[0]);
     } else {
         console.log('Please insert Number');
         process.exit(1)
@@ -71,6 +74,7 @@ try {
         console.log('데이터가 파일로 정상적으로 저장되었습니다.');
     } else {
         console.log('데이터 생성에 과정에 에러가 발생했습니다.');
+        console.exit(1);
     }
     
 } catch (error) {

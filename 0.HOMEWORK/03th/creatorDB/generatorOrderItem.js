@@ -29,9 +29,7 @@ let orderItemIndex = [];
 
 try {
     const orderData = readCsv.readCsvSync(orderFile, 'utf8');
-    randomOrder = readCsv.pickData(orderData, orderNth)
     const itemData = readCsv.readCsvSync(itemFile, 'utf8');
-    randomItem = readCsv.pickData(itemData, itemNth);
     
     let csvOrderItem = '';
     let oneItem = [];
@@ -40,17 +38,33 @@ try {
     let sumId = [];
     let saveName = './csv/orderItem.csv';
     
-    for ( let i =0; i <nNum; i++ ) {
-        let orderItemNo = generateNo.arrayIndex([8,4,4,4,12]);
-        oneItem = [orderItemNo, randomOrder, randomItem].join(',');
-        csvOrderItem += oneItem + ('\n');
-        sumId[i] = orderItemNo;
-    }
-    const orderItemIndex = [ csvOrderItem, sumId];
-    // console.log('저장을 위한 orderItem.cvs', orderItemIndex);
+    // arguments 로 입력된 숫자를 기준으로 데이터 생성
+    
+    let orderItemIndex;
+    const argNum = parseInt(process.argv[2]);
+    
+    if (!isNaN(argNum)) {
+        for ( let i =0; i <argNum; i++ ) {
+            randomOrder = readCsv.pickData(orderData, orderNth)
+            randomItem = readCsv.pickData(itemData, itemNth);
+            
+            let orderItemNo = generateNo.arrayIndex([8,4,4,4,12]);
+            oneItem = [orderItemNo, randomOrder, randomItem].join(',');
+            csvOrderItem += oneItem + ('\n');
+            sumId[i] = orderItemNo;
+        }
+        orderItemIndex = [ csvOrderItem, sumId];
+        console.log('저장을 위한 orderItem.cvs', orderItemIndex);
 
-    fs.writeFileSync(saveName, orderItemIndex[0], 'utf8');
-    console.log('데이터 결합 후 정상적으로 저장되었습니다. ')
+        if (orderItemIndex && orderItemIndex[0]) {
+            fs.writeFileSync(saveName, orderItemIndex[0], 'utf8');
+            console.log('데이터 결합 후 정상적으로 저장되었습니다. ')
+        } else {
+            console.log('데이터 생성에 성공했습니다.')
+            console.exit(1);
+        }
+    }
+    
 
 } catch (error) {
     console.log('데이터 전환 과정에 에러가 발생했습니다.');

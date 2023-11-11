@@ -2,6 +2,7 @@
 
 const fs = require('fs');
 const generateNo = require('./generateNo')
+const generateDay = require('./generateDay');
 
 // const GenerateAdd = require('./generateAdd');
 
@@ -16,29 +17,6 @@ function generateName() {
     let fullName = lastNames[Math.floor(Math.random() * lastNames.length)] + firstNames[Math.floor(Math.random() * firstNames.length)];
     return fullName;
 }
-
-
-// 생년월일 생성
-function generateBirthdate() {
-    const year = Math.floor(Math.random() * 100) + 1900;
-    const month = Math.floor(Math.random() * 12) + 1;
-    const day = Math.floor(Math.random() * 28) + 1;
-
-    // 만나이 구하기
-    const today = new Date();
-    const birth = new Date(year, month, day);
-    let age = today.getYear() - birth.getYear();
-    const m = today.getMonth() - birth.getMonth();
-    if (m < 0) {
-        age--;
-    }
-
-    let birthDate = [String(year), String(month).padStart(2, "0"), String(day).padStart(2, "0")].join('-');
-    let birthDay = [birthDate, age];
-
-    return birthDay;
-}
-
 
 // Gender 생성하기
 function generateGender() {
@@ -63,28 +41,29 @@ function generateAddress() {
 // 사용자  uuid  생성 API 활용
 // function generateUserId = 
 // function uuidv4() {
-//     return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
-//       (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
-//     );
-// }
-
-
-// csv 에 가상의 유저데이터 저장하기
-// 입력된 숫자만큼의 데이터 생성 후  csv 생성
-
-function makeCsv(uNum) {
-    // csv 파일로 가상의 데이터 생성
-    let csvData = '';
-    let sumId = [];
-
-    for (u = 0; u < uNum; u++) {
-        let userId = generateNo.arrayIndex([8, 4, 4, 12]);
-        let birthData = generateBirthdate();
-        let newUser = [userId, generateName(), generateGender(), birthData[0], birthData[1], generateAddress()].join(',');
-        csvData += newUser + '\n';
-        sumId[u] = userId;
-    }
-
+    //     return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+    //       (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+    //     );
+    // }
+    
+    
+    // csv 에 가상의 유저데이터 저장하기
+    // 입력된 숫자만큼의 데이터 생성 후  csv 생성
+    
+    function makeCsv(uNum) {
+        // csv 파일로 가상의 데이터 생성
+        let csvData = '';
+        let sumId = [];
+        
+        for (u = 0; u < uNum; u++) {
+            let userId = generateNo.arrayIndex([8, 4, 4, 12]);
+            let birthData = generateBirthdate();
+            const newBirth = generateDay.oneDay(60);
+            let newUser = [userId, generateName(), generateGender(), newBirth[0], newBirth[1], generateAddress()].join(',');
+            csvData += newUser + '\n';
+            sumId[u] = userId;
+        }
+        
     const sumCsv = [csvData, sumId];
     return sumCsv;
 
@@ -94,6 +73,7 @@ function makeCsv(uNum) {
 
 const argNum = parseInt(process.argv[2]);
 let randomIndex;
+// 날짜 생성기 사용해 생년월일, 나이 구하기
 
 if ( !isNaN(argNum)) {
     randomIndex = makeCsv(argNum);

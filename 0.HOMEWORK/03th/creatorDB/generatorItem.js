@@ -57,8 +57,17 @@ function makeCsv(num) {
     return [csvItem, oneItem];
 }
 
-itemIndex = makeCsv(10);
-console.log(itemIndex);
+// argumnets 사용으로 입력된 숫자를 기준으로 데이터 생성
+const argNum = parseInt(process.argv[2]);
+
+if (!isNaN(argNum)) {
+    itemIndex = makeCsv(argNum);
+    console.log(itemIndex);
+    console.log('데이터 전환이 정상적으로 되었습니다.');
+} else {
+    consolo.leg('데이터 전환과정에 에러가 발생했습니다.');
+}
+
 
 // 압축된 데이타 csv 파일로 저장하기
 
