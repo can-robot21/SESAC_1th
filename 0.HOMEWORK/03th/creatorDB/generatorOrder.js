@@ -70,7 +70,6 @@ try {
     }
     
     if (orderIndex && orderIndex[0] ) {
-        console.log('생성된 주문 데이터:',orderIndex[0]);
         fs.writeFileSync('./csv/order.csv', orderIndex[0], 'utf8');
         // console.log('데이터가 파일로 정상적으로 저장되었습니다.');
     } else {
@@ -81,47 +80,3 @@ try {
 } catch (error) {
     console.log('데이타 처리과정에 에러가 발생했습니다.', error);
 }
-
-
-
-// store 리스트에서 StoreId 랜덤으로 뽑아서 입력
-
-// <---- readFile 의 콜백 함수 처리과정의 비동기 방식
-// const storeFile = 'store.csv';
-// const storeNth = 0;
-
-// randomStore = readCsv.readCsv(storeFile, (err, data) =>{
-//     if(err) {
-//         console.log('Store 파일 읽기 중 에러가 발생했습니다.')
-//         return;
-//     }
-//     console.log('파일 ${store.csv}를 정상적으로 전환했습니다.');
-//     console.log(data);
-
-//     // pickData 로 n 번째 행의 데이터 랜덤 선택
-//     const nthData = readCsv.pickData(data, storeNth)
-//     console.log(nthData);
-//     return nthData;
-// });
-// ---->
-
-// // User 리스트에서 userID 랜덤으로 뽑아서 입력
-
-// ---> readFile 사용한 콜백처리를 통한 파일->데이터 전환
-
-// const userFile = 'user.csv';
-// const userNth = 0; 
-
-// randomUser = readCsv.readCsv(userFile, (err, data) => {
-//     if (err) {
-//         console.log('User 파일 읽기 중 에러가 발생했습니다.');
-//         return;
-//     }
-//     console.log(`파일 ${userFile}을 정상적으로 데이터 전환했습니다.`);
-//     console.log(data);
-
-//     // pickData 로 n번째 행의 랜덤으로 출력
-//     const nthData = readCsv.pickData(data, userNth);
-//     return nthData;
-// })
-// --->

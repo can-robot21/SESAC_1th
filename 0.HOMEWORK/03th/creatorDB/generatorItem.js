@@ -1,7 +1,5 @@
 // id, name, type, unitPrice -> generatorIthem 로 매장 아이템 20개 리스트 생성
 // "Id,Name,Type,UnitPrice
-// aeaa187d-f30d-42db-8c23-7632f85bacef,Americano Coffee,Coffee,3000
-// f543b3a2-9409-4ba5-be23-75834a916962,Strawberry Cake,Cake,5500
 
 const fs = require('fs');
 const generateNo = require('./generateNo');

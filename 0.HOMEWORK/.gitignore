@@ -1,4 +1,6 @@
 ## 파일
+*.csv
 
 ## 폴더
 images/
+node_modules/
