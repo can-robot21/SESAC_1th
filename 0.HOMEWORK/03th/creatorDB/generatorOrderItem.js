@@ -54,7 +54,6 @@ try {
             sumId[i] = orderItemNo;
         }
         orderItemIndex = [ csvOrderItem, sumId];
-        console.log('저장을 위한 orderItem.cvs', orderItemIndex);
 
         if (orderItemIndex && orderItemIndex[0]) {
             fs.writeFileSync(saveName, orderItemIndex[0], 'utf8');

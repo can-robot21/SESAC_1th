@@ -60,7 +60,7 @@ const argNum = parseInt(process.argv[2]);
 let indexStore = makeStore(argNum);
 
 if ( !isNaN(argNum)) {
-    console.log(indexStore);
+    // console.log(indexStore);
 } else {
     console.log('please input Number!!');
     process.exit(1);

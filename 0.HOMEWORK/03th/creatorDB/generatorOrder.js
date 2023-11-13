@@ -63,17 +63,18 @@ try {
             sumId[i] = orderId;
         }
         orderIndex = [csvOrder, sumId];
-        console.log(orderIndex[0]);
+        // console.log(orderIndex[0]);
     } else {
         console.log('Please insert Number');
         process.exit(1)
     }
     
     if (orderIndex && orderIndex[0] ) {
+        console.log('생성된 주문 데이터:',orderIndex[0]);
         fs.writeFileSync('./csv/order.csv', orderIndex[0], 'utf8');
-        console.log('데이터가 파일로 정상적으로 저장되었습니다.');
+        // console.log('데이터가 파일로 정상적으로 저장되었습니다.');
     } else {
-        console.log('데이터 생성에 과정에 에러가 발생했습니다.');
+        // console.log('데이터 생성에 과정에 에러가 발생했습니다.');
         console.exit(1);
     }
     

@@ -19,7 +19,6 @@ const fs = require('fs');
 function pickData(data,nth) {
     // n번째 Data 선별저장
     let nthFileData = [];
-    console.log(data, nth)
 
     for (i=0; i < data.length ; i ++) {
         let rowData = data[i].split(',').map(item => item.trim()); // 빈 데이터 제거를 위해 공백제거 추가

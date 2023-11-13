@@ -57,7 +57,7 @@ function generateAddress() {
         
         for (u = 0; u < uNum; u++) {
             let userId = generateNo.arrayIndex([8, 4, 4, 12]);
-            let birthData = generateBirthdate();
+            // let birthData = generateBirthdate();
             const newBirth = generateDay.oneDay(60);
             let newUser = [userId, generateName(), generateGender(), newBirth[0], newBirth[1], generateAddress()].join(',');
             csvData += newUser + '\n';
@@ -77,7 +77,7 @@ let randomIndex;
 
 if ( !isNaN(argNum)) {
     randomIndex = makeCsv(argNum);
-    console.log(randomIndex);
+    // console.log(randomIndex);
 } else {
     console.log('please insert Number');
     process.exit(1);

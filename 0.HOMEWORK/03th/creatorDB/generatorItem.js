@@ -62,7 +62,6 @@ const argNum = parseInt(process.argv[2]);
 
 if (!isNaN(argNum)) {
     itemIndex = makeCsv(argNum);
-    console.log(itemIndex);
     console.log('데이터 전환이 정상적으로 되었습니다.');
 } else {
     consolo.leg('데이터 전환과정에 에러가 발생했습니다.');
