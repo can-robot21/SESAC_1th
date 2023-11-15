@@ -4,7 +4,7 @@ const fs = require('fs').promises;
 http.createServer(async (req, res) => {
     try {
         const data = await fs.readFile('./server.html');
-        res.writeHead(200, {'Content-Type': 'text/html; charset=uft-8'});
+        res.wHead(200, {'Content-Type': 'text/html; charset=uft-8'});
         res.end(data);
         
     } catch (err) {

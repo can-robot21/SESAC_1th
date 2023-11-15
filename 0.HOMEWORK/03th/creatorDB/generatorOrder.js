@@ -39,13 +39,13 @@ let orderIndex = [];
 
 try {
     const storeData = readCsv.readCsvSync(storeFile,'utf8');
-    
     const userData = readCsv.readCsvSync(userFile, 'utf8');
+    console.log(storeData);
+    console.log(userData);
     
     let csvOrder = '';
     let oneOrder = [];
     let sumId = [];
-
     // argumnets 사용으로 입력된 숫자를 기본으로 데이터 생성
     
     let indexOreder;
@@ -53,6 +53,10 @@ try {
     
     if (!isNaN(argNum)) {
         for ( let i=0; i < argNum; i++ ) {
+            // let randomStore = storeData[Math.floor(Math.random() * storeData.length)]; // 입력받은 StoreID 사용
+            // console.log(randomStore);
+            // let randomUser = userData[Math.floor(Math.random() * userData.length)]; // 입력받은 storeID 사용
+            // console.log(randomUser);
             let randomStore = readCsv.pickData(storeData, storeNth);
             let randomUser = readCsv.pickData(userData, userNth);
 
