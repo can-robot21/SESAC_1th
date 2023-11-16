@@ -1,6 +1,9 @@
 ## 파일
 *.csv
+*.bin
+*.bak
 
 ## 폴더
 images/
 node_modules/
+bin/
