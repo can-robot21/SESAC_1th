@@ -29,7 +29,7 @@ const server = http.createServer(async (req, res) => {
                 const contentType = getContentType(filePath);
                 res.writeHead(200, {"Content-Type": contentType});
                 res.end(data);
-            } else if (imageMatch = req.url.match(/^\/images\/(.+)$/)) { // <----- 이 코드가 되는게,,,
+            } else if (imageMatch = req.url.match(/^\/images\/(.+)$/)) { 
                 const imageName = imageMatch[1];
                 const imagePath = "./images/" + imageName;
                 try {    
@@ -64,7 +64,7 @@ const server = http.createServer(async (req, res) => {
                     console.log("요청온 내용은??", body);
                     const formData = JSON.parse(body);
                     const username = formData.name;
-                    
+
                     const ID = Date.now();
                     users[ID] = username;
                     console.log(users);
