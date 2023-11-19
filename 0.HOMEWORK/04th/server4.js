@@ -1,12 +1,13 @@
 const http = require("http");
 const fs = require("fs").promises;
 
+const server = http.createServer(function (req, res) )
 http.createServer(async (req, res) => {
     try {
         const data = await fs.readFile("./server.html");
         res.writeHead(200, {"Content-Type": "text/html; charset=utf-8"});
 
-        
+
         res.end(data);
     } catch (err) {
         console.error(err);

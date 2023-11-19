@@ -19,11 +19,14 @@ const SERVER_ERROR = 500;
 const server = http.createServer(async (req, res) => {
     console.log(req.method, res.url);
 
-    try {
-        if (req.method === 'GET'){
-            
-        }
-    }
+    // try {
+    //     if (err) {
+
+    //     }
+    //     }
+    // } catch {
+        
+    // }
 })
     .listen(8000, () => {
         console.log('8000포트가 열렸습니다.');
