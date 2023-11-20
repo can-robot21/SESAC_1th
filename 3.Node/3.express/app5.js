@@ -1,54 +1,58 @@
-const express = require('express');
-const fs = require('fs');
-const path = require('path');
+const express = require("express");
+const path = require("path");
 
 const app = express();
 const port = 3000;
+const NOT_FOUND = 404;
+const SERVER_ERROR = 500;
+const users = {};
 
-app.use(express.static('public'));
+app.use(express.json());
 
-app.get('/', (req, res) => {
-    res.send(`
-    <html>
-    <head>
-    <title> 이미지 로딩 </title>
-    </head>
-    <body>
-    <h1>이미지</h1>
-    <img src = "/images/top.jpg">
-    </body>
-    </html>
-    `);
+app.use((req, res, next) => {
+  console.log(req.url);
+  next();
 });
 
-// require('fs')
-app.get('/about1', (req, res) => {
-    
-    const htmlFilePath = path.join(__dirname,'public', 'index.html' );
-    
-    fs.readFile(htmlFilePath, 'utf8', (err, data) =>{
-        if (err) {
-            console.error('파일 읽기 실패', err);
-            res.status(400).send(' 서버 오류 ');
-            return;            
-        }        
-        res.send(data);
-    });
+app.use("/static", express.static("static"));
+app.use("/images", express.static(path.join(__dirname, "images")));
+
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "static", "index.html"));
+});
+app.get("/about", (req, res) => {
+  res.sendFile(path.join(__dirname, "static", "about.html"));
 });
 
-// require('fs') 제외
-app.get('/about2', (req, res) => {
-    
-    const htmlFilePath = path.join(__dirname,'public', 'index.html' );
-    res.sendFile(htmlFilePath, (err) => {
-        if(err) {
-            console.log('파일전송 오류:', err);
-            res.status(500).send('서버 오류');
-        }
-        res.send(data);
-    })
+app.get("/user", (req, res) => {
+  res.json(users);
+});
+app.post("/user", (req, res) => {
+  const ID = Date.now();
+  setName(ID, req);
+  res.status(201).send("등록 성공");
+});
+app.put("/user/:ID", (req, res) => {
+  const ID = req.params.ID;
+  setName(ID, req);
+  res.status(200).send("수정 성공");
+});
+app.delete("/user/:ID", (req, res) => {
+  const ID = req.params.ID;
+  delete users[ID];
+  res.status(204).send("삭제 성공");
+});
+
+app.use((req, res) => {
+  res.status(NOT_FOUND).send("Not Found");
 });
 
 app.listen(port, (req, res) => {
-    console.log(`${port} 실행중`)
-})
+  console.log(`서버가 ${port}에서 실행 중입니다.`);
+});
+
+// ----------------------------------------
+function setName(ID, req) {
+  const jsonData = req.body;
+  users[ID] = jsonData.name;
+}

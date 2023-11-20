@@ -50,23 +50,67 @@ function generateAddress() {
     // csv 에 가상의 유저데이터 저장하기
     // 입력된 숫자만큼의 데이터 생성 후  csv 생성
     
-    function makeCsv(uNum) {
-        // csv 파일로 가상의 데이터 생성
-        let csvData = '';
-        let sumId = [];
+//     function makeCsv(uNum) {
+//         // csv 파일로 가상의 데이터 생성
+//         let csvData = '';
+//         let sumId = [];
         
-        for (u = 0; u < uNum; u++) {
-            let userId = generateNo.arrayIndex([8, 4, 4, 12]);
-            // let birthData = generateBirthdate();
-            const newBirth = generateDay.oneDay(60);
-            let newUser = [userId, generateName(), generateGender(), newBirth[0], newBirth[1], generateAddress()].join(',');
-            csvData += newUser + '\n';
-            sumId[u] = userId;
-        }
+//         for (u = 0; u < uNum; u++) {
+//             let userId = generateNo.arrayIndex([8, 4, 4, 12]);
+//             // let birthData = generateBirthdate();
+//             const newBirth = generateDay.oneDay(60);
+//             let newUser = [userId, generateName(), generateGender(), newBirth[0], newBirth[1], generateAddress()].join(',');
+//             csvData += newUser + '\n';
+//             sumId[u] = userId;
+//         }
         
+//     const sumCsv = [csvData, sumId];
+//     return sumCsv;
+
+// }
+// =======================================
+// function makeCsv(uNum) {
+//     // csv 파일로 가상의 데이터 생성
+//     let csvData = 'id,name,gender,birthday,age,address\n';
+//     let sumId = [];
+    
+//     for (let u = 0; u < uNum; u++) {
+//         let userId = generateNo.arrayIndex([8, 4, 4, 12]);
+//         const fullName = generateName();
+//         const gender = generateGender();
+//         const newBirth = generateDay.oneDay(60);
+//         const age = Math.floor((new Date().getTime() - new Date(newBirth[0]).getTime()) / (1000 * 3600 * 24 * 365));
+//         const address = generateAddress();
+        
+//         let newUser = [userId, fullName, gender, newBirth[0], age, address].join(',');
+//         csvData += newUser + '\n';
+//         sumId[u] = userId;
+//     }
+    
+//     const sumCsv = [csvData, sumId];
+//     return sumCsv;
+// }
+// ===========================================
+function makeCsv(uNum) {
+    // csv 파일로 가상의 데이터 생성
+    let csvData = 'id,name,gender,birthday,age,address\n';
+    let sumId = [];
+    
+    for (let u = 0; u < uNum; u++) {
+        let userId = generateNo.arrayIndex([8, 4, 4, 12]);
+        const fullName = generateName();
+        const gender = generateGender();
+        const newBirth = generateDay.oneDay(60);
+        const age = Math.floor((new Date().getTime() - new Date(newBirth[0]).getTime()) / (1000 * 3600 * 24 * 365));
+        const address = generateAddress();
+        
+        let newUser = [userId, fullName, gender, newBirth[0], age, address].join(',');
+        csvData += newUser + '\n';
+        sumId[u] = userId;
+    }
+    
     const sumCsv = [csvData, sumId];
     return sumCsv;
-
 }
 
 // arguments 로 입력받은 숫자로 데이터 지정
