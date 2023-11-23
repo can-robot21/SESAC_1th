@@ -28,10 +28,11 @@ th {
 
 .pageNo {
     display: inline-flex;
-    text-align: center;
+    color: cornflowerblue;
+    justify-content: center;;
     align-items: center;
     text-decoration: none;
-    border: 1px solid gray;
+    border: 1px solid rgb(201, 201, 201);
     padding: 3px;
     margin: 2px 0px 2px 0px;
     cursor: pointer;

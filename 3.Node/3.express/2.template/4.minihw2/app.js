@@ -62,7 +62,7 @@ async function loadDataIntoMemory() {
 async function startServer() {
     await loadDataIntoMemory();
     
-    app.get('/', (req, res) =>
+    app.get('/', (req, res) => {
         // 데이터 저장
         // 페이지
         const itemsPerPage = 10;

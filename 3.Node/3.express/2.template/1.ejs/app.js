@@ -19,15 +19,15 @@ app.get('/greeting', (req, res) => {
     res.render('greeting', { username: username });
 });
 
-app.get('/welcome', (req, res) =>{
+app.get('/welcome', (req, res) => {
     const isAdmin = true;
     res.render('welcome', { isAdmin: isAdmin });
-})
+});
 
 app.get('/fruits', (req, res) => {
     const fruits = ['Apple', 'Banana', 'Orange', 'Grapes'];
     res.render('fruits', { fruits: fruits });
-})
+});
 
 app.get('/page', (req, res) => {
     const data = {
@@ -35,8 +35,8 @@ app.get('/page', (req, res) => {
         content: '여기에 본문에 들어갈 내용 작성',
     }
     res.render('main', { data: data });
-})
+});
 
 app.listen(port, () => {
     console.log(`서버가 ${port}에서 실행중`);
-})
+});
