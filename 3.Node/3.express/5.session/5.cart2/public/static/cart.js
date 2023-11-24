@@ -2,6 +2,11 @@ document.addEventListener('DOMContentLoaded', () => {
     fetch('/products')
         .then((response) => response.json())
         .then((products) => displayProduct(products));
+
+    // 장바구니 목록 표시
+    fetch('/cart')
+        .then((response) => response.json())
+        .then((cart) => displayCart(cart));
 });
 
 function displayProduct(products) {
@@ -38,7 +43,6 @@ function displayCart(cart) {
     console.log(cart);
     const cartTableBody = document.querySelector('#cartTable tbody');
     cartTableBody.innerHTML = ''; // 지우고 새로 그림
-    
     cart.forEach((item) => {
         const row = document.createElement('tr');
         row.innerHTML = `
