@@ -3,6 +3,9 @@
 *.bin
 *.bak
 *.json
+*.db
+*.sqlite
+*.sqlite3
 
 ## 폴더
 images/
