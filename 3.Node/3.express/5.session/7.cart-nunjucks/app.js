@@ -44,6 +44,11 @@ app.get('/', (req, res) => {
     res.render('home.html', {user});
 });
 
+app.get('/products', (req, res) => {
+    const user = req.session.user;
+    res.render('products.html', {user});
+});
+
 app.get('/cart', (req, res) => {
     res.render('cart.html', { user: req.session.user });
 });
@@ -75,7 +80,7 @@ app.get('/app/logout', (req, res) => {
     });
 });
 
-app.use('/app/check-login', (req, res) => {
+app.use('/api/check-login', (req, res) => {
     const loggedIn = req.session.user ? true : false;
     res.json({ loggedIn });
 });
@@ -84,9 +89,9 @@ app.get('/api/products', (req, res) => {
     res.json(products);
 });
 
-app.get('/app/cart', (req, res) => {
+app.get('/api/cart', (req, res) => {
     const cart = req.session.cart || [];
-    res.json({ cart, totalAmount: calculateTotalAmount(cart)});
+    res.json({ cart, totalAmount: calculateAmount(cart) });
 });
 
 app.post('/api/cart/:productId', (req, res) => {

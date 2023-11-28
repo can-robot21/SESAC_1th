@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded', function () {
     
     getCartFromAPI();
-    // getCartFromSessionStorage();
-    // getCartFromLocalStorage();
+    getCartFromSessionStorage();
+    getCartFromLocalStorage();
 
     function getCartFromAPI() {
         // 1. 서버에서 가져온다.
