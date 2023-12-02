@@ -4,8 +4,7 @@
 *.bak
 *.json
 *.db
-*.sqlite
-*.sqlite3
+*.sql
 
 ## 폴더
 images/
