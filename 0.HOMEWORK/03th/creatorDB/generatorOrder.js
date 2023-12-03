@@ -40,10 +40,10 @@ let orderIndex = [];
 try {
     const storeData = readCsv.readCsvSync(storeFile,'utf8');
     const userData = readCsv.readCsvSync(userFile, 'utf8');
-    console.log(storeData);
-    console.log(userData);
+    // console.log(storeData);
+    // console.log(userData);
     
-    let csvOrder = '';
+    let csvOrder = 'OrderId,OrderAt,StoreId,UserId\n';
     let oneOrder = [];
     let sumId = [];
     // argumnets 사용으로 입력된 숫자를 기본으로 데이터 생성
@@ -75,9 +75,9 @@ try {
     
     if (orderIndex && orderIndex[0] ) {
         fs.writeFileSync('./csv/order.csv', orderIndex[0], 'utf8');
-        // console.log('데이터가 파일로 정상적으로 저장되었습니다.');
+        console.log('데이터가 CSV 파일로 정상적으로 저장되었습니다.');
     } else {
-        // console.log('데이터 생성에 과정에 에러가 발생했습니다.');
+        console.log('데이터를 CSV로 저장하는 과정에 에러가 발생했습니다.');
         console.exit(1);
     }
     

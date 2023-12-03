@@ -31,10 +31,10 @@ try {
     const orderData = readCsv.readCsvSync(orderFile, 'utf8');
     const itemData = readCsv.readCsvSync(itemFile, 'utf8');
     
-    let csvOrderItem = '';
+    let csvOrderItem = 'OrderId,ItemId\n,';
     let oneItem = [];
-    let sumOrderId = [];
-    let nNum = 10;
+    // let sumOrderId = [];
+    // let nNum = 10;
     let sumId = [];
     let saveName = './csv/orderItem.csv';
     
@@ -57,9 +57,9 @@ try {
 
         if (orderItemIndex && orderItemIndex[0]) {
             fs.writeFileSync(saveName, orderItemIndex[0], 'utf8');
-            console.log('데이터 결합 후 정상적으로 저장되었습니다. ')
+            console.log('데이터 결합 후 CSV로 정상적으로 저장되었습니다. ')
         } else {
-            console.log('데이터 생성에 성공했습니다.')
+            console.log('데이터 생성 후 저장과정에 에러가 발생했습니다.')
             console.exit(1);
         }
     }
