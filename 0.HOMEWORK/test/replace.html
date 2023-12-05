@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>페이지 전환 예제</title>
+</head>
+<body>
+    <button id="changePageButton">페이지 전환</button>
+    <div id="content">
+        <p>첫 번째 페이지</p>
+    </div>
+
+        <h1>JavaScript로 HTML 코드 추가하기</h1>
+    <script>
+        var htmlCode = "<p>이것은 <strong>HTML</strong> 코드입니다.</p>";
+        document.write(htmlCode);
+    </script>
+
+    <script>
+        // 페이지 전환을 위한 함수
+function changePage() {
+    // 새로운 내용을 담을 요소 생성
+    var newContent = document.createElement("p");
+    newContent.textContent = "두 번째 페이지";
+
+    // 기존 내용을 담고 있는 요소 가져오기
+    var oldContent = document.getElementById("content");
+
+    // replaceChild 메소드를 사용하여 기존 내용을 새로운 내용으로 교체
+    oldContent.parentNode.replaceChild(newContent, oldContent);
+}
+
+        // 버튼 클릭 시 페이지 전환 함수 호출
+        document.getElementById("changePageButton").addEventListener("click", changePage);
+    </script>
+</body>
+</html>

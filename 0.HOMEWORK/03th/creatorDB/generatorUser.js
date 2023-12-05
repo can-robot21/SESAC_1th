@@ -93,7 +93,7 @@ function generateAddress() {
 // ===========================================
 function makeCsv(uNum) {
     // csv 파일로 가상의 데이터 생성
-    let csvData = 'id,name,gender,birthday,age,address\n';
+    let csvData = 'Id,Name,Gender,Birthdate,Age,Address\n';
     let sumId = [];
     
     for (let u = 0; u < uNum; u++) {

@@ -37,7 +37,7 @@ storeName();
 
 function makeStore(uNum) {
     // 가상의 데이터 생성 후 csv 파일로 ...
-    let csvStore = '';
+    let csvStore = 'StoreId,StoreInfo,StoreCategory,StoreAddress\n';
     let sumId = [];
 
     for (u = 0; u < uNum; u++) {

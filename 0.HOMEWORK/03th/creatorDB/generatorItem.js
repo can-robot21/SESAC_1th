@@ -40,7 +40,7 @@ function makeItem() {
 
 // csv 저장을 위한 파일결합...
 function makeCsv(num) {
-    let csvItem = ''; // csvItem - csv 저장용 결합 데이타
+    let csvItem = 'ItemId,ItemCategory,ItemType,Price,\n'; // csvItem - csv 저장용 결합 데이타
     let oneItem = []; // oneItem - 상품Index, 데이터간 결합에 사용
     let allPrice = [3000, 3500, 4500, 5000, 5500, 6000, 6500];
     
