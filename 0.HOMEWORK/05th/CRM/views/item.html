@@ -1,7 +1,31 @@
-{% extends "header.html" %}
-    <h2>miniShop</h2>
-    <div class="main">{{ title }}</div>
-    {% extends "menu.html %}
-    <h1> 상품 관리 </h1>
-    
-{% intends "footer.html" %}
+{% include "header.html" %}
+{% include "menu.html" %}
+
+<h2> {{ title }} </h2>
+<h1> {{ message }} </h1>
+
+<table>
+    <thead>
+        <tr>
+            <td>상품ID</td>
+            <td>주문일</td>
+            <td>매장ID</td>
+            <td>사용자ID</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td colspan="4">데이터 없음</td>
+        </tr>
+    </tbody>
+    <tr>
+        <tbody>
+            <td>orderId01</td>
+            <td>date01</td>
+            <td>storeId</td>
+            <td>userId01</td>
+        </tbody>
+    </tr>
+
+</table>
+{% include "footer.html" %}
