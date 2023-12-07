@@ -1,8 +1,12 @@
 {% include "header.html" %}
 {% include "menu.html" %}
 
-<h2> {{ titile }} </h2>
-<h1> {{ message }} </h1>
+<div class="main" id="subtitle">
+    <h2> {{ title }} </h2> 
+</div>
+<div class="main" id="message">
+    <h1> |{{ message }} </h1>
+</div>
 
 <table>
     <thead>
@@ -14,19 +18,29 @@
         </tr>
     </thead>
     <tbody>
+        {% if orders.length > 0 %}
+        {% for order in orders %}
         <tr>
-            <td colspan="4">데이터 없음</td>
+            <td>{{ order.field1 }}</td>
+            <td>{{ order.field2 }}</td>
+            <td>{{ order.field3 }}</td>
+            <td>{{ order.field4 }}</td>
         </tr>
-    </tbody>
-    <tr>
-        <tbody>
-            <td>orderId01</td>
-            <td>date01</td>
-            <td>storeId</td>
-            <td>userId01</td>
+        {%  endfor %}
+        {% else %}
+        <tr>
+            <td colspan="5" id="nodata">데이터 없음</td>
+        </tr>
+        {% endif %}
         </tbody>
-    </tr>
-
 </table>
-
+<div class="pagination">
+    <ul>
+        {% for i in 1..totalPages %}
+        <li>                                                         
+            <a href="/order?page={{ i }}">{{ i }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
 {% include "footer.html" %}

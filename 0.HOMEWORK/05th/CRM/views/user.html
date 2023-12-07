@@ -1,8 +1,12 @@
 {% include "header.html" %}
 {% include "menu.html" %}
 
-<h2> {{ titile }} </h2>
-<h1> {{ message }} </h1>
+<div class="main" id="subtitle">
+    <h2> {{ title }} </h2>
+</div>
+<div class="main" id="message">
+    <h1> |{{ message }} </h1>
+</div>
 
 <table>
     <thead>
@@ -15,20 +19,33 @@
         </tr>
     </thead>
     <tbody>
+        {% if users.length > 0 %}
+        {% for user in users %}
         <tr>
-            <td>데이터 없음</td>
+            <td>{{ user.field1 }}</td>
+            <td>{{ user.field2 }}</td>
+            <td>{{ user.field3 }}</td>
+            <td>{{ user.field5 }}</td>
+            <td>{{ user.field4 }}</td>
         </tr>
+        {%  endfor %}
+        {% else %}
+        <tr>
+            <td colspan="5" id="nodata">데이터 없음</td>
+        </tr>
+        {% endif %}
     </tbody>
-    <tr>
-        <tbody>
-            <td>id01</td>
-            <td>name01</td>
-            <td>gender01</td>
-            <td>age01</td>
-            <td>birthdate01</td>
-        </tbody>
-    </tr>
 
 </table>
+
+<div class="pagination">
+    <ul>
+        {% for i in 1..totalPages %}
+        <li>
+            <a href="/user?page={{ i }}">{{ i }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
 
 {% include "footer.html" %}

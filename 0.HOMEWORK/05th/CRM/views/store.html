@@ -1,8 +1,12 @@
 {% include "header.html" %}
 {% include "menu.html" %}
 
-<h2> {{ titile }} </h2>
-<h1> {{ message }} </h1>
+<div class="main" id="subtitle">
+    <h2> {{ title }} </h2> 
+</div>
+<div class="main" id="message">
+    <h1> |{{ message }} </h1>
+</div>
 
 <table>
     <thead>
@@ -10,24 +14,33 @@
             <td>매장ID</td>
             <td>매장명</td>
             <td>매장분류</td>
-            <td>매장명</td>
             <td>매장주소</td>
         </tr>
     </thead>
     <tbody>
+        {% if stores.length > 0 %}
+        {% for store in stores %}
         <tr>
-            <td>데이터 없음</td>
+            <td>{{ store.field1 }}</td>
+            <td>{{ store.field2 }}</td>
+            <td>{{ store.field3 }}</td>
+            <td>{{ store.field4 }}</td>
         </tr>
-    </tbody>
-    <tbody>
+        {%  endfor %}
+        {% else %}
         <tr>
-            <td>id01</td>
-            <td>store01</td>
-            <td>category01</td>
-            <td>name01</td>
-            <td>address01</td>
+            <td colspan="5" id="nodata">데이터 없음</td>
         </tr>
+        {% endif %}
     </tbody>
 </table>
-
-{{ include "footer.html" }}
+<div class="pagination">
+    <ul>
+        {% for i in 1..totalPages %}
+        <li>                                                         
+            <a href="/store?page={{ i }}">{{ i }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% include "footer.html" %}

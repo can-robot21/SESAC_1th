@@ -1,11 +1,13 @@
 {% include "header.html" %}
 {% include "menu.html" %}
 
-<h2> {{ titile }} </h2>
-<h1> {{ message }} </h1>
+<div class="main" id="subtitle">
+    <h2> {{ title }} </h2> 
+</div>
+<div class="main" id="message">
+    <h1> |{{ message }} </h1>
+</div>
 
-<h1> 주문상품 </h1>
-<h2> 주문상품 리스트 + 검색 </h2>
 <table>
     <thead>
         <tr>
@@ -15,18 +17,28 @@
         </tr>
     </thead>
     <tbody>
+        {% if orderItems.length > 0 %}
+        {% for orderItem in orderItems %}
         <tr>
-            <td colspan="3">데이터 없음</td>
+            <td>{{ orderItem.field1 }}</td>
+            <td>{{ orderItem.field2 }}</td>
+            <td>{{ orderItem.field3 }}</td>
         </tr>
-    </tbody>
-    <tr>
-        <tbody>
-            <td>orderItem01</td>
-            <td>orderId01</td>
-            <td>userId</td>
+        {%  endfor %}
+        {% else %}
+        <tr>
+            <td colspan="5" id="nodata">데이터 없음</td>
+        </tr>
+        {% endif %}
         </tbody>
-    </tr>
-
 </table>
-
+<div class="pagination">
+    <ul>
+        {% for i in 1..totalPages %}
+        <li>                                                         
+            <a href="/orderItem?page={{ i }}">{{ i }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
 {% include "footer.html" %}
