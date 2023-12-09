@@ -39,13 +39,33 @@
 </table>
 
 <div class="pagination">
-    <ul>
+    <ul id = "pagination-List">
         {% for i in 1..totalPages %}
-        <li>
+        <!-- <li>
             <a href="/user?page={{ i }}">{{ i }}</a>
         </li>
-        {% endfor %}
+        {% endfor %} -->
     </ul>
 </div>
+
+<script>
+    // 클라이언트  페이지네이션 처리
+    const currentPage = {{ currentPage }};
+
+    const paginationList = document.getElementById("pagination-list");
+    
+    // 페이지 네이션 링크 생성
+    for (let i = 1; i <= totalPages; i++) {
+        const listItem = document.createElement("li");
+        const pageLink = document.createElement("a");
+        pageLink.href = '/user?page=${i}';
+        pageLink.textContent = i;
+        if(i === currentPage) {
+            listItem.classList.add("active");
+        }
+        listItem.appendChild(pageLink);
+        paginationList.appendChild(listItem);
+    }
+</script>
 
 {% include "footer.html" %}

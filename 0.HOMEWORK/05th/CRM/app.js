@@ -20,7 +20,7 @@ nunjucks.configure(viewDir, {
 })
 app.set("view engine", "html");
 
-// // express.js 정적 파일 제공 설정
+// express.js 정적 파일 제공 설정
 // app.use(express.static("public"));
 // express.js 정적 파일 제공 설정
 app.use(express.static(publicDir));
@@ -128,7 +128,7 @@ app.get('/user', (req, res) => {
                         // 페이지 수에 맞게 총 페이지 계산해 출력하기
                         totalPages: totalPages
                     };
-                    console.log('사용자 총페이지수', totalPages);
+                    console.log("사용자 총페이지수", totalPages);
                     res.render('user', data);
                 }
             });            
@@ -143,14 +143,7 @@ app.get('/store', (req, res) => {
 
     // 매장 정보 itemPerPage 만큼씩 나눠서 페이지 출력
     const offset = (page - 1) * itemPerPage;
-    const query = `SELECT * FROM store LIMIT ${itemPerPage} OFFSET ${offset}`;
-
-    // 전체 매장수 카운트
-    const countQuery = 'SELECT count(*) FROM store';
-    
-    db.all(query, (err, rows) => {
-        if (err) {
-            console.log("매장 데이타 출력 실패");
+    const query = `SELECT * FROM store LIMIT ${itemPerPage} OFFSET ${offset}`;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
             res.status(500).json({ error: 'Database error'});
         } else {
             db.get(countQuery, (countErr, countRow) => {
@@ -159,7 +152,6 @@ app.get('/store', (req, res) => {
                 } else {
                     const totalStores = countRow.total;
                     const totalPages = Math.ceil(totalStores / itemPerPage);
-                    console.log(totalStores, totalPages, itemPerPage);
 
                     const data = {
                         title: "매장 리스트",
@@ -167,7 +159,6 @@ app.get('/store', (req, res) => {
                         stores: rows,
                         totalPages: totalPages
                     }
-                    console.log("정리된 매장 데이터 : ", data);
                     res.render('store', data);
                 }
             });
@@ -198,7 +189,6 @@ app.get('/item', (req, res) => {
                 } else {
                     const totalItems = countRow.total;
                     const totalPages = Math.ceil(totalItems / itemPerPage);
-                    console.log(totalItems, totalPages, itemPerPage);
 
                     const data = {
                         title: "상품 리스트",
@@ -237,7 +227,6 @@ app.get('/order', (req, res) => {
                 } else {
                     const totalOrders = countRow.total;
                     const totalPages = Math.ceil(totalOrders / itemPerPage);
-                    console.log(totalOrders, totalPages, itemPerPage);
 
                     const data = {
                         title: "주문 리스트",
@@ -275,7 +264,6 @@ app.get('/orderItem', (req, res) => {
                 } else {
                     const totalOrderItems = countRow.total;
                     const totalPages = Math.ceil(totalOrderItems / itemPerPage);
-                    console.log(totalOrderItems, totalPages, itemPerPage);
 
                     const data = {
                         title: "주문 상품 리스트",
