@@ -1,0 +1,38 @@
+{% include "header.html" %}
+{% include "menu.html" %}
+
+<div class="main" id="subtitle">
+    <h2> {{ title }} </h2> 
+</div>
+<div class="main" id="message">
+    <h1> |{{ message }} </h1>
+</div>
+
+<table>
+    <thead>
+        <tr>
+            <td>itemID</td>
+            <td>type</td>
+            <td>name</td>
+            <td>price</td>
+        </tr>
+    </thead>
+    <tbody>
+        {% if orders.length > 0 %}
+        {% for order in orders %}
+        <tr>
+            <td><a href="/itemDetail?itemId={{ item.field1 }}">{{ item.field1 }}</a></td>
+            <td>{{ item.field2 }}</td>
+            <td>{{ item.field3 }}</td>
+            <td>{{ item.field4 }}</td>
+        </tr>
+        {%  endfor %}
+        {% else %}
+        <tr>
+            <td colspan="5" id="nodata">데이터 없음</td>
+        </tr>
+        {% endif %}
+    </tbody>
+</table>
+
+{% include "footer.html" %}

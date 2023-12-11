@@ -1,0 +1,66 @@
+{% include "header.html" %}
+{% include "menu.html" %}
+
+<div class="main" id="subtitle">
+    <h2> {{ title }} </h2>
+</div>
+<div class="main" id="message">
+    <h1> |{{ message }} </h1>
+</div>
+
+<table>
+    <thead>
+        <tr>
+            <td>StoreID</td>
+            <td>NAME</td>
+            <td>Address</td>
+        </tr>
+    </thead>
+    <tr>
+        <td>
+            {{ store.field1 }}
+        </td>
+        <td>
+            {{ store.field2 }}
+        </td>
+        <td>
+            {{ store.field3 }}
+        </td>
+    </tr>
+</table>
+<br>
+<table>
+    <tr >
+        <td id="tableTitle">
+            | 월간매출
+        </td>
+    </tr>
+</table>
+<table>
+    <thead>
+        <tr>
+            <td>Month</td>
+            <td>Revenue</td>
+            <td>Count</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>매출월</td>
+            <td>매출액</td>
+            <td>판매횟수</td>
+        </tr>
+    </tbody>
+</table>
+<br>
+<table>
+        <tr>
+            <td>가장 많이 방문한 사용자 TOP10 </td>
+        </tr>
+    <tr>
+        <td>검색 결과</td>
+    </tr>
+</table>
+<br>
+
+{% include "footer.html" %}

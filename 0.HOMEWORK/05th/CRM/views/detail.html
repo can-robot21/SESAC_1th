@@ -1,0 +1,87 @@
+{% include "header.html" %}
+{% include "menu.html" %}
+
+<div class="main" id="subtitle">
+    <h2> {{ title }} </h2>
+</div>
+<div class="main" id="message">
+    <h1> |{{ message }} </h1>
+</div>
+
+<table>
+    <thead>
+        <tr>
+            <td>UserID</td>
+            <td>NAME</td>
+            <td>Gender</td>
+            <td>AGE</td>
+            <td>BirthDate</td>
+            <td>BirthDate</td>
+        </tr>
+    </thead>
+    <tr>
+        <td>
+            {{ user.field1 }}
+        </td>
+        <td>
+            {{ user.field2 }}
+        </td>
+        <td>
+            {{ user.field3 }}
+        </td>
+        <td>
+            {{ user.field5 }}
+        </td>
+        <td>
+            {{ user.field4 }}
+        </td>
+        <td>
+            {{ user.field6 }}
+        </td>
+    </tr>
+
+</table>
+<br>
+<table>
+    <tr>
+        <td id="tableTitle">
+            | 구매정보
+        </td>
+    </tr>
+</table>
+<table>
+    <thead>
+        <tr>
+            <td>OrderId</td>
+            <td>OrderDate</td>
+            <td>storeId</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>주문아이디</td>
+            <td>주문일</td>
+            <td>매장아이디</td>
+        </tr>
+    </tbody>
+</table>
+<br>
+<table>
+        <tr>
+            <td>가장 많이 방문한 매장 TOP5 </td>
+        </tr>
+    <tr>
+        <td>검색 결과</td>
+    </tr>
+</table>
+<br>
+<table>
+        <tr>
+            <td>가장 많이 주문한 메뉴 TOP5 </td>
+        </tr>
+    <tr>
+        <td>검색 결과</td>
+    </tr>
+</table>
+
+{% include "footer.html" %}

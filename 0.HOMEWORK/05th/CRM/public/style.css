@@ -1,7 +1,6 @@
 body {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 12px;
-
 }
 
 a {
@@ -74,8 +73,34 @@ tbody td#nodata{
 }
 
 #footer {
-    width: 90%;
+    width: 90% ;
     margin-left: auto;
     margin-right: auto;
     text-align: center;
+}
+
+#pagination {
+    display: flex;
+    align-content: center;
+}
+
+#paginationInBox {
+    border: 0px;
+}
+
+#pageNo {
+    font-size: 14px;
+    display: inline-flex;
+    margin: 5px 5px;
+    padding: 5px;
+    width: 20px;
+    height: 20px;
+    border: 1px solid gray;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+#tableTitle {
+    text-align: left;
 }

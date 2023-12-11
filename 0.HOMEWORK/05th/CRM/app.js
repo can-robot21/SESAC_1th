@@ -41,6 +41,7 @@ function init_database() {
                 console.log("DB 초기화 실패:", initErr);
             } else {
                 console.log("초기화 성공");
+
             }
         });
     };
@@ -50,11 +51,10 @@ function init_database() {
             const tableName = tablesToCheck[index];
 
             db.get(checkTableQuery, [tableName], (err, row) => {
-                if(err) {
+                if (err) {
                     console.log(`테이블 ${tableName} 확인중 에러 발생`);
                     return;
                 }
-
                 if (!row) {
                     console.log(`테이블 ${tableName}이 존재하지 않습니다.`);
                     createTable();
@@ -73,21 +73,20 @@ function init_database() {
     checkNextTable(0);
 }
 
-    // 초기화(기본)
-    // const sql = fs.readFileSync(path.join(__dirname, 'init_database.sql'), 'utf8');
+// 초기화(기본)
+// const sql = fs.readFileSync(path.join(__dirname, 'init_database.sql'), 'utf8');
 
-    // console.log("경로", path.join(__dirname, 'init_database.sql'));
-    // db.exec(sql, (err) => {
-    //     if (err) {
-    //         console.log("DB 초기화 실패", err);
-    //     } else {
-    //         console.log("초기화 성공");
-    //     }
-    // })
-
-init_database();
+// console.log("경로", path.join(__dirname, 'init_database.sql'));
+// db.exec(sql, (err) => {
+//     if (err) {
+//         console.log("DB 초기화 실패", err);
+//     } else {
+//         console.log("초기화 성공");
+//     }
+// })
 
 // 라우터
+// 데이타 베이스 초기화 완료 후 변수들 계산 후 서버 실행
 app.get('/', (req, res) => {
     res.render('index', { title: "미니샵 관리화면", message: " 관리자 화면 " });
 })
@@ -95,43 +94,52 @@ app.get('/', (req, res) => {
 const itemPerPage = 20;
 
 // user 통해 사용자 리스트 출력
+
+// =======================================================
 app.get('/user', (req, res) => {
-    //페이지 번호 가져오기
+    // 페이지 번호 가져오기
     const page = parseInt(req.query.page) || 1;
+    console.log("page:", page);
 
     // 사용자 정보 itemPerpage 만큼씩 나눠서 페이지 출력
-    // const offset = (page - 1) * itemPerPage;
     const offset = (page - 1) * itemPerPage;
+    console.log("offset:", offset);
     const query = `SELECT * FROM user LIMIT ${itemPerPage} OFFSET ${offset}`;
 
     // 전체 사용자수 카운트
     const countQuery = 'SELECT count(*) FROM user';
+    console.log("countQuery:", countQuery);
+
+    // 페이지 네이션을 위한 초기화
+    let totalUsers = 0;
+    let totalPages = 0;
 
     db.all(query, (err, rows) => {
         if (err) {
             console.log("사용자 데이타 출력 실패:", err);
-            res.status(500).json({ error: 'Database error'});
+            res.status(500).json({ error: 'Database error' });
         } else {
             db.get(countQuery, (countErr, countRow) => {
                 if (countErr) {
                     console.log('전체 사용자수 조회실패 : ', countErr);
-                    res.status(500).json({error: "Database Error"});
+                    res.status(500).json({ error: "Database Error" });
                 } else {
-                    const totalUsers = countRow.total;
-                    const totalPages = Math.ceil(totalUsers / itemPerPage);
+                    totalUsers = countRow['count(*)'];
+                    totalPages = Math.ceil(totalUsers / itemPerPage);
                     console.log(totalUsers, totalPages, itemPerPage);
 
                     const data = {
                         title: "사용자 리스트",
                         message: "사용자 리스트 + 검색",
                         users: rows,
-                        // 페이지 수에 맞게 총 페이지 계산해 출력하기
-                        totalPages: totalPages
+                        totalPages: totalPages,
+                        totalUsers: totalUsers
                     };
-                    console.log("사용자 총페이지수", totalPages);
+
+                    // 페이지 네이션에 필요한 변수들을 템플릿에 전달
                     res.render('user', data);
                 }
-            });            
+            });
         }
     });
 });
@@ -143,12 +151,19 @@ app.get('/store', (req, res) => {
 
     // 매장 정보 itemPerPage 만큼씩 나눠서 페이지 출력
     const offset = (page - 1) * itemPerPage;
-    const query = `SELECT * FROM store LIMIT ${itemPerPage} OFFSET ${offset}`;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
-            res.status(500).json({ error: 'Database error'});
+    const query = `SELECT * FROM store LIMIT ${itemPerPage} OFFSET ${offset}`;
+
+    // 전체 매장수 카운트
+    const countQuery = `SELECT count(*) FROM user`;
+    console.log('전체 매장수', countQuery);
+
+    db.all(query, (err, rows) => {
+        if (err) {
+            console.log("사용자 데이타 출력 실패:", err);
         } else {
             db.get(countQuery, (countErr, countRow) => {
                 if (countErr) {
-                    res.status(500).json({ error: "Database Count Error "});
+                    res.status(500).json({ error: "Database Count Error " });
                 } else {
                     const totalStores = countRow.total;
                     const totalPages = Math.ceil(totalStores / itemPerPage);
@@ -163,7 +178,7 @@ app.get('/store', (req, res) => {
                 }
             });
         }
-    });
+    })
 });
 
 // item 으로 상품 리스트 출력
@@ -181,11 +196,11 @@ app.get('/item', (req, res) => {
     db.all(query, (err, rows) => {
         if (err) {
             console.log("매장 데이타 출력 실패");
-            res.status(500).json({ error: "Database Error "});
+            res.status(500).json({ error: "Database Error " });
         } else {
             db.get(countQuery, (countErr, countRow) => {
                 if (countErr) {
-                    res.status(500).json({ error: "Database Count Error"});
+                    res.status(500).json({ error: "Database Count Error" });
                 } else {
                     const totalItems = countRow.total;
                     const totalPages = Math.ceil(totalItems / itemPerPage);
@@ -208,7 +223,7 @@ app.get('/item', (req, res) => {
 app.get('/order', (req, res) => {
     // 페이지 번호 가져오기
     const page = req.query.page || 1;
-    
+
     // 주문 정보 itemPerPage 만큼씩 나눠서 페이지 출력
     const offset = (page - 1) * itemPerPage;
     const query = "SELECT * FROM 'order' LIMIT ? OFFSET ?";
@@ -219,11 +234,11 @@ app.get('/order', (req, res) => {
     db.all(query, [itemPerPage, offset], (err, rows) => {
         if (err) {
             console.log("주문 데이타 출력 실패");
-            res.status(500).json({ error: "Database error"});
+            res.status(500).json({ error: "Database error" });
         } else {
             db.get(countQuery, (countErr, countRow) => {
                 if (countErr) {
-                    res.status(500).json({ error: "Database Count Error"});
+                    res.status(500).json({ error: "Database Count Error" });
                 } else {
                     const totalOrders = countRow.total;
                     const totalPages = Math.ceil(totalOrders / itemPerPage);
@@ -236,7 +251,7 @@ app.get('/order', (req, res) => {
                     }
                     res.render('order', data);
                 }
-            });            
+            });
         }
     });
 });
@@ -247,20 +262,20 @@ app.get('/orderItem', (req, res) => {
     const page = req.query.page || 1;
 
     // 주문 상품 itemPerPage 만큼씩 나눠서 페이지 출력
-    const offset = (page -1) * itemPerPage;
+    const offset = (page - 1) * itemPerPage;
     const query = "SELECT * FROM `orderItem` LIMIT ? OFFSET ?";
-    
+
     // 전체 주문상품 카운트
     const countQuery = "SELECT count(*) FROM `orderItem`";
 
     db.all(query, [itemPerPage, offset], (err, rows) => {
         if (err) {
             console.log("주문 상품 리스트 데이타 출력 실패");
-            res.status(500).json({ error: "Database error"});
+            res.status(500).json({ error: "Database error" });
         } else {
             db.get(countQuery, (countErr, countRow) => {
                 if (countErr) {
-                    res.status(500).json({ error: "Database count Error"});
+                    res.status(500).json({ error: "Database count Error" });
                 } else {
                     const totalOrderItems = countRow.total;
                     const totalPages = Math.ceil(totalOrderItems / itemPerPage);
@@ -277,15 +292,119 @@ app.get('/orderItem', (req, res) => {
         }
     });
 });
-// app.get('/orderItem', (req, res) => {
-//     const data = {
-//         title: "주문상품 리스트",
-//         message: "주문상품 리스트 + 검색"
-//     }
-//     res.render('orderItem', data);
-// })
+
+// 사용자 상세정보
+app.get('/detail', (req, res) => {
+    const userId = req.query.userId;
+
+    // user 데이터 + 주문데이타(리스트 : 주문 아이디 + 상점데이타 )
+    const query = `SELECT * FROM user WHERE field1 = ?`;
+
+    // 상품정보
+    db.get(query,[userId], (err, user) =>{
+        if (err) {
+            console.log("사용자정보 출력 실패");
+            res.status(500).json({ error: "Database Error"});
+        } else {
+            if (user) {
+                const data = {
+                    title: "사용자 정보",
+                    message: "상세정보",
+                    user: user
+                }
+                res.render('detail', data);
+            } else {
+                res.status(404).json({ error: 'User not found '});
+            }
+        }
+    });
+});
+
+// 매장 상세정보
+app.get('/storeDetail', (req, res) => {
+    const storeId = req.query.storeId;
+
+    // store 데이터 + 주문데이타 (리스트: 사용자 아이디 + 방문횟수)
+    const query = `SELECT * FROM store WHERE field1 = ?`;
+
+    // 매장정보
+    db.get(query,[storeId], (err, store) => {
+            if (err) {
+                console.log("매장정보 출력 실패");
+                res.status(500).json({ error: "Store Database Error"});
+            } else {
+                if (store) {
+                    const data = {
+                        title: "매장 정보",
+                        message: "|상세정보",
+                        store: store
+                    }
+                    res.render('storeDetail', data);
+                } else {
+                    res.status(404).json({ error: "store not found"});
+                }
+            }
+    });    
+});
+
+// 상품 상세정보
+app.get('/itemDetail', (req, res) => {
+    const itemId = req.query.storeId;
+
+    // item 데이타 + 월간 매출액 
+    const query = `SELECT * FROM item WHERE field1 = ?`;
+
+    // 상품정보
+    db.get(query, [itemId], (err, store) => {
+        if (err) {
+            console.log("상품정보 출력 실패");
+            res.status(500).json({ error: "Item Database Error"});
+        } else {
+            if (item) {
+                const data = {
+                    title: "상품 정보",
+                    message: "|상세정보",
+                    item: item
+                }
+                res.render('itemDetail', data);
+            } else {
+                res.status(404).json({ error: "item not found"});
+            }
+        }
+    });
+});
+
+// 주문 상세정보
+app.get('/orderDetail', (req, res) => {
+    const orderId = req.query.orderId;
+
+    // order 데이타 
+    const query = `SELECT * FROM order WHERE field1 = ?`;
+
+    // 주문정보
+    db.get(query, [orderId], (err, order) => {
+        if (err) {
+            console.log("주문정보 출력 실패");
+            res.status(500).json({ error: "Order Database Error"});
+        } else {
+            if(order) {
+                const data = {
+                    title: "주문 정보",
+                    message: "|상세정보",
+                    order: order
+                }
+                res.render('orderDetail', data);
+            } else {
+                res.status(404).json({ error: "order not found"});
+            }
+        }
+    });
+});
 
 // 서버실행
 app.listen(port, () => {
     console.log(`포트 ${port}이 실행 중`);
 });
+
+
+init_database();

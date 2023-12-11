@@ -21,7 +21,7 @@
         {% if stores.length > 0 %}
         {% for store in stores %}
         <tr>
-            <td>{{ store.field1 }}</td>
+            <td><a href="/storeDetail?storeId={{ store.field1 }}">{{ store.field1 }}</a></td>
             <td>{{ store.field2 }}</td>
             <td>{{ store.field3 }}</td>
             <td>{{ store.field4 }}</td>
