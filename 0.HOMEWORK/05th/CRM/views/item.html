@@ -22,9 +22,9 @@
             {% if items.length > 0 %}
             {% for item in items %}
             <tr>
-                <td>{{ item.field1 }}</td>
-                <td>{{ item.field2 }}</td>
+                <td><a href="/itemDetail?itemId={{ item.field1 }}">{{ item.field1 }}</a></td>
                 <td>{{ item.field3 }}</td>
+                <td>{{ item.field2 }}</td>
                 <td>{{ item.field4 }}</td>
             </tr>
             {%  endfor %}

@@ -12,14 +12,14 @@
     <thead>
         <tr>
             <td>itemID</td>
-            <td>type</td>
+            <td>category</td>
             <td>name</td>
             <td>price</td>
         </tr>
     </thead>
     <tbody>
-        {% if orders.length > 0 %}
-        {% for order in orders %}
+        {% if items.length > 0 %}
+        {% for item in items %}
         <tr>
             <td><a href="/itemDetail?itemId={{ item.field1 }}">{{ item.field1 }}</a></td>
             <td>{{ item.field2 }}</td>
@@ -32,6 +32,22 @@
             <td colspan="5" id="nodata">데이터 없음</td>
         </tr>
         {% endif %}
+        <table>
+            <thead>
+                <tr>
+                    <td>Month</td>
+                    <td>Total Revenue</td>
+                    <td>Item Count</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>월간</td>
+                    <td>매출 총액</td>
+                    <td>상품 총량</td>
+                </tr>
+            </tbody>
+        </table>
     </tbody>
 </table>
 

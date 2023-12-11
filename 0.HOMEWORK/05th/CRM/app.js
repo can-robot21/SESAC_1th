@@ -10,6 +10,7 @@ const dbFile = "mydb.db";
 
 const db = new sqlite3.Database(dbFile);
 
+// ======================================
 // nunjucks 설정
 const viewDir = path.join(__dirname, "views");
 const publicDir = path.join(__dirname, "public");
@@ -25,6 +26,7 @@ app.set("view engine", "html");
 // express.js 정적 파일 제공 설정
 app.use(express.static(publicDir));
 
+//=======================================
 // DB 초기화
 function init_database() {
     // 테이블 유무 검토할 데이터
@@ -73,29 +75,14 @@ function init_database() {
     checkNextTable(0);
 }
 
-// 초기화(기본)
-// const sql = fs.readFileSync(path.join(__dirname, 'init_database.sql'), 'utf8');
-
-// console.log("경로", path.join(__dirname, 'init_database.sql'));
-// db.exec(sql, (err) => {
-//     if (err) {
-//         console.log("DB 초기화 실패", err);
-//     } else {
-//         console.log("초기화 성공");
-//     }
-// })
-
-// 라우터
-// 데이타 베이스 초기화 완료 후 변수들 계산 후 서버 실행
 app.get('/', (req, res) => {
     res.render('index', { title: "미니샵 관리화면", message: " 관리자 화면 " });
 })
 
 const itemPerPage = 20;
 
+// ===========================================
 // user 통해 사용자 리스트 출력
-
-// =======================================================
 app.get('/user', (req, res) => {
     // 페이지 번호 가져오기
     const page = parseInt(req.query.page) || 1;
@@ -191,11 +178,12 @@ app.get('/item', (req, res) => {
     const query = `SELECT * FROM item LIMIT ${itemPerPage} OFFSET ${offset}`;
 
     // 전체 상품수 카운트
-    const countQuery = "SELECT count(*) FROM item";
+    const countQuery = `SELECT count(*) FROM item`;
+    console.log("전체 상품수:", countQuery);
 
     db.all(query, (err, rows) => {
         if (err) {
-            console.log("매장 데이타 출력 실패");
+            console.log("상품 데이타 출력 실패");
             res.status(500).json({ error: "Database Error " });
         } else {
             db.get(countQuery, (countErr, countRow) => {
@@ -211,7 +199,7 @@ app.get('/item', (req, res) => {
                         items: rows,
                         totalPages: totalPages
                     }
-                    console.log("상품 데이타 총페이지 : ", totalPages);
+                    console.log("상품 데이타 페이지수: ", totalPages);
                     res.render('item', data);
                 }
             });
@@ -293,18 +281,20 @@ app.get('/orderItem', (req, res) => {
     });
 });
 
+
+// ==================================================
 // 사용자 상세정보
-app.get('/detail', (req, res) => {
+app.get('/userDetail', (req, res) => {
     const userId = req.query.userId;
 
     // user 데이터 + 주문데이타(리스트 : 주문 아이디 + 상점데이타 )
     const query = `SELECT * FROM user WHERE field1 = ?`;
 
     // 상품정보
-    db.get(query,[userId], (err, user) =>{
+    db.get(query, [userId], (err, user) => {
         if (err) {
             console.log("사용자정보 출력 실패");
-            res.status(500).json({ error: "Database Error"});
+            res.status(500).json({ error: "Database Error" });
         } else {
             if (user) {
                 const data = {
@@ -312,9 +302,9 @@ app.get('/detail', (req, res) => {
                     message: "상세정보",
                     user: user
                 }
-                res.render('detail', data);
+                res.render('userDetail', data);
             } else {
-                res.status(404).json({ error: 'User not found '});
+                res.status(404).json({ error: 'User not found ' });
             }
         }
     });
@@ -328,37 +318,37 @@ app.get('/storeDetail', (req, res) => {
     const query = `SELECT * FROM store WHERE field1 = ?`;
 
     // 매장정보
-    db.get(query,[storeId], (err, store) => {
-            if (err) {
-                console.log("매장정보 출력 실패");
-                res.status(500).json({ error: "Store Database Error"});
-            } else {
-                if (store) {
-                    const data = {
-                        title: "매장 정보",
-                        message: "|상세정보",
-                        store: store
-                    }
-                    res.render('storeDetail', data);
-                } else {
-                    res.status(404).json({ error: "store not found"});
+    db.get(query, [storeId], (err, store) => {
+        if (err) {
+            console.log("매장정보 출력 실패");
+            res.status(500).json({ error: "Store Database Error" });
+        } else {
+            if (store) {
+                const data = {
+                    title: "매장 정보",
+                    message: "|상세정보",
+                    store: store
                 }
+                res.render('storeDetail', data);
+            } else {
+                res.status(404).json({ error: "store not found" });
             }
-    });    
+        }
+    });
 });
 
 // 상품 상세정보
 app.get('/itemDetail', (req, res) => {
-    const itemId = req.query.storeId;
+    const itemId = req.query.itemId;
 
     // item 데이타 + 월간 매출액 
     const query = `SELECT * FROM item WHERE field1 = ?`;
 
     // 상품정보
-    db.get(query, [itemId], (err, store) => {
+    db.get(query, [itemId], (err, item) => {
         if (err) {
             console.log("상품정보 출력 실패");
-            res.status(500).json({ error: "Item Database Error"});
+            res.status(500).json({ error: "Item Database Error" });
         } else {
             if (item) {
                 const data = {
@@ -368,7 +358,7 @@ app.get('/itemDetail', (req, res) => {
                 }
                 res.render('itemDetail', data);
             } else {
-                res.status(404).json({ error: "item not found"});
+                res.status(404).json({ error: "item not found" });
             }
         }
     });
@@ -378,16 +368,18 @@ app.get('/itemDetail', (req, res) => {
 app.get('/orderDetail', (req, res) => {
     const orderId = req.query.orderId;
 
+
     // order 데이타 
-    const query = `SELECT * FROM order WHERE field1 = ?`;
+    // const query = `SELECT * FROM order WHERE field1 = ?`;
+    const query = `SELECT * FROM \`order\` WHERE field1 = ?`;
 
     // 주문정보
     db.get(query, [orderId], (err, order) => {
         if (err) {
             console.log("주문정보 출력 실패");
-            res.status(500).json({ error: "Order Database Error"});
+            res.status(500).json({ error: "Order Database Error" });
         } else {
-            if(order) {
+            if (order) {
                 const data = {
                     title: "주문 정보",
                     message: "|상세정보",
@@ -395,12 +387,13 @@ app.get('/orderDetail', (req, res) => {
                 }
                 res.render('orderDetail', data);
             } else {
-                res.status(404).json({ error: "order not found"});
+                res.status(404).json({ error: "order not found" });
             }
         }
     });
 });
 
+// ======================================================
 // 서버실행
 app.listen(port, () => {
     console.log(`포트 ${port}이 실행 중`);

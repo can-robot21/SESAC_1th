@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>    
+    <title>Document</title>
+</head>
+<body>
+    <h1 id="myHeading">헬로우 제이쿼리</h1>
+    <button id="changeTextBtn">Change Text</button>
+
+    <script>
+        $(document).ready(function() {
+            $('#chageTextBtn').click(function() {
+                $('#myHeading').text('텍스트 변경!');
+            })
+        })
+        <!-- document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('chageTextBtn').addEventListener('click', function() {
+                document.getElementById('myHeading').textcontent = '텍스트 변경!';
+            });
+        }); -->
+    </script>
+</body>
+</html>

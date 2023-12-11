@@ -11,34 +11,42 @@
 <table>
     <thead>
         <tr>
-            <td>주문상품ID</td>
-            <td>주문ID</td>
-            <td>사용자ID</td>
+            <td>orderItemID</td>
+            <td>orderId</td>
+            <td>itemId</td>
         </tr>
     </thead>
     <tbody>
-        {% if orderItems.length > 0 %}
-        {% for orderItem in orderItems %}
         <tr>
-            <td>{{ orderItem.field1 }}</td>
-            <td>{{ orderItem.field2 }}</td>
-            <td>{{ orderItem.field3 }}</td>
+            {% if orderItems.length > 0 %}
+            {% for orderItem in orderItems %}
+            <tr>
+                <td>{{ orderItem.field1 }}</td>
+                <td><a href="/orderDetail?orderId={{ orderItem.field2 }}">{{ orderItem.field2 }}</a></td>
+                <td><a href="/itemDetail?itemId={{ orderItem.field3 }}">{{ orderItem.field3 }}</a></td>
+            </tr>
+            {%  endfor %}
+            {% else %}
+            <tr>
+                <td colspan="4" id="nodata">데이터 없음</td>
+            </tr>
+            {% endif %}
         </tr>
-        {%  endfor %}
-        {% else %}
-        <tr>
-            <td colspan="5" id="nodata">데이터 없음</td>
-        </tr>
-        {% endif %}
-        </tbody>
+    </tbody>
+
 </table>
-<div class="pagination">
-    <ul>
-        {% for i in 1..totalPages %}
-        <li>                                                         
-            <a href="/orderItem?page={{ i }}">{{ i }}</a>
-        </li>
-        {% endfor %}
-    </ul>
-</div>
+<table class="pagination">
+    <tr >
+        <td >
+            <div id="paginationInBox">
+                {% for i in range(1, totalPages + 1) %}
+                <div id="pageNo">
+                    <a href="/user?page={{ i }}">{{ i }}</a>
+                </div>
+                {% endfor %}
+            </div>
+        </td>
+    </tr>
+</table>
+
 {% include "footer.html" %}

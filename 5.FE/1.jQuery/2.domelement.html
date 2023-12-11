@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script  src="http://code.jquery.com/jquery-3.7.1.min.js"></script>  
+    <title>Document</title>
+</head>
+<body>
+    <title>jQuery</title>
+    <ul id="shoppingList">
+        <li>빵</li>
+        <li>우유</li>
+        <li>계란</li>
+    </ul>
+    <input type="text" id="newItem" palceholder="추가할 상품입력" />
+    <button id="addItemBtn">Add Item</button>
+
+    <script>
+        $(document).ready(function() {
+            $('#addItemBtn').click(function() {
+                var newItem = $('#newItem'.val());
+                if (newItme !== '') {
+                    $('#shoppingList').append('<li' + newItem + '</li');
+                }
+
+                // 입력필드 지우기
+            })
+        })
+
+        <!-- document.addEventListener('DOMContenteLoaded', function() {
+            //버튼클릭시
+            var addItemBtn = document.getElementById('addItemBtn');
+
+            addItemBtn.addEventListener('click', function() {
+                var netItemInput = document.getElementById('newItem');
+            })
+        }) -->
+    </script>
+</body>
+</html>
