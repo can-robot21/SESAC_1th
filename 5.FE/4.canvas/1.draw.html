@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id = "myCanvas" width="400" height="400"></canvas>
+    <!-- <canvas id="jsCanvas" class="canvasBox" width="500px" height="500px"></canvas> -->
+
+    <script>
+        //Canvas를 가져오기
+        const canvas = document.getElementById('myCanvas');
+        const context = canvas.getContext('2d');
+
+        // 내가 원하는 그림을 context에
+        context.fillStyle = "#423344"; // rgb
+        context.fillRect(50, 50, 100, 80); // x, y, width, height
+
+        // 선그리기
+        context.strokeSyle = "#ff0000";
+        context.lineWidth = 5;
+        context.beginPath();
+        context.moveTo(200, 50); // 시작점
+        context.lineTo(300, 130); // 끝점
+        context.stroke();
+
+        // 원 그리기
+        context.fillStyle = "#00aa00";
+        context.beginPath();
+        context.arc(350, 130, 45, 60);
+        
+
+
+    </script>
+</body>
+</html>

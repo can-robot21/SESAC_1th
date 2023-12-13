@@ -2,7 +2,7 @@
 {% include "menu.html" %}
 
 <div class="main" id="subtitle">
-    <h2> {{ title }} </h2> 
+    <h2> {{ title }} </h2>
 </div>
 <div class="main" id="message">
     <h1> |{{ message }} </h1>
@@ -11,28 +11,29 @@
 <table>
     <thead>
         <tr>
-            <td>orderID</td>
-            <td>orderAt</td>
-            <td>storeId</td>
-            <td>userId</td>
+            <td> orderItemID  </td>
+            <td> orderId </td>
+            <td> itemId </td>
+            <td> itemName </td>
         </tr>
     </thead>
-    <tbody>
-        {% if orders.length > 0 %}
-        {% for order in orders %}
-        <tr>
-            <td>{{ order.field1 }}</td>
-            <td>{{ order.field2 }}</td>
-            <td>{{ store.field1 }}</td>
-            <td>{{ user.field1 }}</td>
-        </tr>
-        {%  endfor %}
-        {% else %}
-        <tr>
-            <td colspan="5" id="nodata">데이터 없음</td>
-        </tr>
-        {% endif %}
-    </tbody>
+    <tr>
+        <td>
+            {{ orders.field1 }}
+        </td>
+        <td>
+            {{ orders.field2 }}
+        </td>
+        <td>
+            {{ orders.field3 }}
+        </td>
+        <td>
+            {{ orders.field4 }}
+        </td>
+    </tr>
 </table>
+<br>
+<table>
+<br>
 
 {% include "footer.html" %}

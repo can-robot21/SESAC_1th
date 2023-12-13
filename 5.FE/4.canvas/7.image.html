@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id = "myCanvas" width="400" height="600"></canvas>
+
+    <script>
+        //Canvas를 가져오기
+        const canvas = document.getElementById('myCanvas');
+        const context = canvas.getContext('2d');
+
+        const player = {
+            x: 150,
+            y: 400,
+            speed: 10,
+        };
+
+        <!-- const cloud = {
+            x: 100, 
+            y: 100,
+            speed2: 10,
+        } -->
+
+        const image1 = new Image();
+        image1.src = 'plane.png';
+        image1.onload = function() {
+            draw();
+        };
+
+        const image2 = new Image();
+        image2.src = 'cloud.png';
+        image2.onload = function() {
+            draw();
+        }
+
+        function createcloud() {
+            const cloud = {
+                x: Math.random() * (canvas.width - 60),
+                y: 0, 
+                speed: Math.random() * 2 +1
+            }
+            clouds.push(cloud);
+        }
+
+
+        function draw() {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            context.drawImage(image1, player.x, player.y, 60, 60);
+            context.strokeRect(0, 0, canvas.width, canvas.height);
+
+            // 위에서 내려오는 
+            for (let i = 0; i < clouds.lenght; i++ ) {
+                const cloud = couds[i];
+                context.drawImage(image2, cloud.x, cloud.y, 60, 60);
+                cloud.y += cloud.speed;
+
+                // 구름이 캔버스에서 벗어나면 삭제 후 새구름 생성
+                if (cloud.y > canvas.height) {
+                    clouds.splice(i, 1);
+                    createcloud();
+                }
+                
+            }
+
+            cloud.x += cloud.speed;
+            if (cloud.x > canvas.height) {
+                cloud.x = 0;
+                cloud.y = Math.random() * (canvas.width - 60);
+            }
+
+            requestAnimationFrame(draw); // 반복에니메이션
+
+        }
+
+        draw();
+
+        // 키도브 이벤트 처리
+        window.addEventListener('keydown', (e) => {
+            console.log(e.key);
+            switch(e.key) {
+                case 'ArrowLeft' :
+                    player.x -= player.speed;
+                    break;
+                case 'ArrowRight' :
+                    player.x += player.speed;
+                    break;
+            }
+        })
+
+    </script>
+</body>
+</html>

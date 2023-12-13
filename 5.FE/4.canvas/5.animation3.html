@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id = "myCanvas" width="400" height="400"></canvas>
+
+    <script>
+        //Canvas를 가져오기
+        const canvas = document.getElementById('myCanvas');
+        const context = canvas.getContext('2d');
+
+        const ball = {
+            x:50,
+            y: 50,
+            radius: 20,
+            dx: 2,
+            dy: 3,
+            gravity: 0.5,
+            bounce: -0.7,
+        }
+
+        function drawBall() {
+
+            context.clearRect(0, 0, canvas.width, canvas.height);
+
+            context.beginPath();
+            context.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+            context.fillStyle = '#0095DD';
+            context.fill();
+            context.closePath();
+
+            // 공을 이동 시키기
+
+            ball.x += ball.dx
+            ball.y += ball.dy
+
+            // 벽에 부딛치면, 반대로 가도록 반사
+
+
+            // 가로벽에 부딛쳤을때
+            if (ball.x > canvas.width || ball.x < 0) {
+                ball.x = -ball.dx;
+            }
+
+            // 세로벽에 부딛쳤을때
+            if (ball.y > canvas.height || ball.y < 0) {
+                ball.dx = -ball.dy;
+            }
+
+
+            requestAnimationFrame(drawBall);
+        }
+
+        drawBall();
+    </script>
+</body>
+</html>

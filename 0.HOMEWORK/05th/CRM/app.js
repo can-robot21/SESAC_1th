@@ -75,31 +75,53 @@ function init_database() {
     checkNextTable(0);
 }
 
+// 페이지네이션
+function createPaginationData(currentPage, totalPages, visiblePages) {
+    const paginationData = {
+        currentPage: currentPage,
+        totalPage: totalPages,
+        visiblePages: visiblePages,
+        pages: []
+    };
+
+    let startPage = Math.max(currentPage - Math.floor(visiblePages / 2), 1);
+    let endPage = Math.min(startPage + visiblePages - 1, totalPages);
+
+    if (endPage - startPage + 1 < visiblePages) {
+        startPage = Math.max(endPage - visiblePages + 1, 1);
+    }
+
+    if (currentPage > 1) {
+        paginationData.pages.push({ text: "이전", page: currentPage - 1 });
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+        paginationData.pages.push({ text: i, page: i });
+    }
+
+    if (currentPage < totalPages) {
+        paginationData.pages.push({ text: "다음", page: currentPage + 1 });
+    }
+
+    return paginationData;
+}
+
 app.get('/', (req, res) => {
     res.render('index', { title: "미니샵 관리화면", message: " 관리자 화면 " });
 })
 
-const itemPerPage = 20;
+const itemPerPage = 15;
 
 // ===========================================
 // user 통해 사용자 리스트 출력
 app.get('/user', (req, res) => {
-    // 페이지 번호 가져오기
-    const page = parseInt(req.query.page) || 1;
-    console.log("page:", page);
-
-    // 사용자 정보 itemPerpage 만큼씩 나눠서 페이지 출력
-    const offset = (page - 1) * itemPerPage;
-    console.log("offset:", offset);
-    const query = `SELECT * FROM user LIMIT ${itemPerPage} OFFSET ${offset}`;
-
-    // 전체 사용자수 카운트
-    const countQuery = 'SELECT count(*) FROM user';
-    console.log("countQuery:", countQuery);
-
     // 페이지 네이션을 위한 초기화
-    let totalUsers = 0;
-    let totalPages = 0;
+    const currentPage = parseInt(req.query.page) || 1;
+    const offset = (currentPage -1) * itemPerPage;
+    
+    // 사용자 정보 itemPerpage 만큼씩 나눠서 페이지 출력
+    const query = `SELECT * FROM user LIMIT ${itemPerPage} OFFSET ${offset}`;
+    const countQuery = 'SELECT count(*) FROM user';    
 
     db.all(query, (err, rows) => {
         if (err) {
@@ -111,16 +133,19 @@ app.get('/user', (req, res) => {
                     console.log('전체 사용자수 조회실패 : ', countErr);
                     res.status(500).json({ error: "Database Error" });
                 } else {
-                    totalUsers = countRow['count(*)'];
-                    totalPages = Math.ceil(totalUsers / itemPerPage);
+                    const totalUsers = countRow['count(*)'];
+                    const totalPages = Math.ceil(totalUsers / itemPerPage);
                     console.log(totalUsers, totalPages, itemPerPage);
+
+                    const paginationData = createPaginationData(currentPage, totalPages, 10);
 
                     const data = {
                         title: "사용자 리스트",
                         message: "사용자 리스트 + 검색",
                         users: rows,
                         totalPages: totalPages,
-                        totalUsers: totalUsers
+                        totalUsers: totalUsers,
+                        pageination: paginationData
                     };
 
                     // 페이지 네이션에 필요한 변수들을 템플릿에 전달
@@ -138,10 +163,10 @@ app.get('/store', (req, res) => {
 
     // 매장 정보 itemPerPage 만큼씩 나눠서 페이지 출력
     const offset = (page - 1) * itemPerPage;
-    const query = `SELECT * FROM store LIMIT ${itemPerPage} OFFSET ${offset}`;
+    const query = `SELECT * FROM store as total LIMIT ${itemPerPage} OFFSET ${offset}`;
 
     // 전체 매장수 카운트
-    const countQuery = `SELECT count(*) FROM user`;
+    const countQuery = `SELECT count(*) as total FROM user`;
     console.log('전체 매장수', countQuery);
 
     db.all(query, (err, rows) => {
@@ -178,7 +203,7 @@ app.get('/item', (req, res) => {
     const query = `SELECT * FROM item LIMIT ${itemPerPage} OFFSET ${offset}`;
 
     // 전체 상품수 카운트
-    const countQuery = `SELECT count(*) FROM item`;
+    const countQuery = `SELECT count(*) as total FROM item`;
     console.log("전체 상품수:", countQuery);
 
     db.all(query, (err, rows) => {
@@ -217,7 +242,7 @@ app.get('/order', (req, res) => {
     const query = "SELECT * FROM 'order' LIMIT ? OFFSET ?";
 
     // 전체 주문수 카운트
-    const countQuery = "SELECT count(*) FROM `order`";
+    const countQuery = "SELECT count(*) as total FROM `order`";
 
     db.all(query, [itemPerPage, offset], (err, rows) => {
         if (err) {
@@ -320,7 +345,6 @@ app.get('/storeDetail', (req, res) => {
     // 매장정보
     db.get(query, [storeId], (err, store) => {
         if (err) {
-            console.log("매장정보 출력 실패");
             res.status(500).json({ error: "Store Database Error" });
         } else {
             if (store) {
@@ -354,8 +378,9 @@ app.get('/itemDetail', (req, res) => {
                 const data = {
                     title: "상품 정보",
                     message: "|상세정보",
-                    item: item
+                    items: item
                 }
+                console.log("검색결과: ", data);
                 res.render('itemDetail', data);
             } else {
                 res.status(404).json({ error: "item not found" });
@@ -368,9 +393,7 @@ app.get('/itemDetail', (req, res) => {
 app.get('/orderDetail', (req, res) => {
     const orderId = req.query.orderId;
 
-
     // order 데이타 
-    // const query = `SELECT * FROM order WHERE field1 = ?`;
     const query = `SELECT * FROM \`order\` WHERE field1 = ?`;
 
     // 주문정보
@@ -379,11 +402,12 @@ app.get('/orderDetail', (req, res) => {
             console.log("주문정보 출력 실패");
             res.status(500).json({ error: "Order Database Error" });
         } else {
+            console.log(order);
             if (order) {
                 const data = {
                     title: "주문 정보",
                     message: "|상세정보",
-                    order: order
+                    orders: order
                 }
                 res.render('orderDetail', data);
             } else {

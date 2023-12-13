@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>메시지 테스트</title>
+</head>
+<body>
+    <h1>Flash Message </h1>
+
+    <form action="" method="POST">
+        <label for="username">Username: </label>
+        <input type="text" id="usernsme" name = "username">
+        <br>
+        <label for="password">Password</label>
+        <input type="text" id="password" name = "password">
+        <button type="button">로그인</button>
+    </form>
+
+    {% if message.info %}
+    <p> {{ message.info }}</p>
+    {% else %}
+    <p> {{ 에러 : No message }}</p>
+</body>
+</html>

@@ -42,13 +42,46 @@
 <table class="pagination">
     <tr >
         <td >
-            <div id="paginationInBox">
+            <!-- <div id="paginationInBox">
                 {% for i in range(1, totalPages + 1) %}
                 <div id="pageNo">
                     <a href="/user?page={{ i }}">{{ i }}</a>
                 </div>
                 {% endfor %}
-            </div>
+            </div> -->
+                         <!-- 페이지 네이션 -->
+                         <div id="paginationInBox">
+                            {% if currentPage > 1 %}
+                            <div id="pageNo">
+                                <a href="/user?page=1">1</a>
+                            </div>
+                            {% endif %}
+                            
+                            {% if currentPage > 11 %}
+                            <div id="pageNo">
+                                <a href="/user?page={{ currentPage - 10 }}">[이전]</a>
+                            </div>
+                            {% endif %}
+                            
+                            {% for i in range(startPage, endPage + 1) %}
+                            <div id="pageNo">
+                                <a href="/user?page={{ i }}">{{ i }}</a>
+                            </div>
+                            {% endfor %}
+                            
+                            {% if currentPage < totalPages - 10 %}
+                            <div id="pageNo">
+                                <a href="/user?page={{ currentPage + 10 }}">[다음]</a>
+                            </div>
+                            {% endif %}
+                            
+                            {% if currentPage < totalPages %}
+                            <div id="pageNo">
+                                <a href="/user?page={{ totalPages }}">{{ totalPages }}</a>
+                            </div>
+                            {% endif %}
+                        </div>
+                        <!-- 페이지 네이션 -->
         </td>
     </tr>
 </table>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id = "myCanvas" width="400" height="400"></canvas>
+
+    <script>
+        //Canvas를 가져오기
+        const canvas = document.getElementById('myCanvas');
+        const context = canvas.getContext('2d');
+
+        const ball = {
+            x:50,
+            y: 50,
+            radius: 20,
+            dx: 2,
+            dy: 0,
+            gravity: 0.5,
+            bounce: -0.7,
+
+        }
+
+        function drawBall() {
+
+            context.clearRect(0, 0, canvas.width, canvas.height);
+
+            context.beginPath();
+            context.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+            context.fillStyle = '#0095DD';
+            context.fill();
+            context.closePath();
+
+            // 중력적용
+            ball.dy += ball.gravity;
+
+            // 공을 이동
+            ball.y += ball.dy;
+            ball.x += ball.dx;
+
+            // 캔바스 경계 도달 튕기는 효과
+            if (ball.x + ball.radius > canvas.width || ball.x - ball.radius < 0) {
+                ball.dx = -ball.dx;
+            }
+
+            if (ball.y + ball.radius > canvas.height) {
+                ball.y = canvas.height - ball.radius;
+                ball = - ball.dy * ball.bounce;
+
+                
+            }
+
+            requestAnimationFrame(drawBall);
+        }
+
+        drawBall();
+    </script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="textCanvas" width="400" height="400"></canvas>
+
+    <script>
+        const canvas = document.getElementById('textCanvas');
+        const context = canvas.getContext('2d');
+
+        context.fillText('Hello Canvas!', 50, 100);
+        context.fillText('Heolo Canvas2!', 200, 100);
+
+        // 스타일
+        context.fillStyle = 'red';
+        context.fillText('빨간 글씨', 50, 150);
+
+        context.font = 'italic 20px Times New Roman';
+        context.fillStyle = 'blue';
+        context.fillText('Blue Italic', 200, 150);
+
+        // 함수화
+        function drawText(font, style, text, x, y) {
+            context.font = font;
+            context.fillStyle = style;
+            context.fillText(text, x, y);
+        }
+
+        // 다양한 속성의 스타일 적용한 텍스트
+        drawText ('30px Arial', '#009ddd', 'Arial Regular', 20, 200);
+        drawText ('italic 20px Goudy Stout', '#FF0000', '테스트 쓰기', 150, 250);
+        drawText ('bold 20px Times New Roman', '#009900', 'TEST TEXT', 300, 200);
+    </script>
+</body>
+</html>
