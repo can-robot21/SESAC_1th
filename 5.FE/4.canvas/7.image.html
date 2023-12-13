@@ -19,11 +19,7 @@
             speed: 10,
         };
 
-        <!-- const cloud = {
-            x: 100, 
-            y: 100,
-            speed2: 10,
-        } -->
+        const clouds = [];
 
         const image1 = new Image();
         image1.src = 'plane.png';
@@ -34,14 +30,13 @@
         const image2 = new Image();
         image2.src = 'cloud.png';
         image2.onload = function() {
-            draw();
         }
 
         function createcloud() {
-            const cloud = {
+            const clouds = {
                 x: Math.random() * (canvas.width - 60),
                 y: 0, 
-                speed: Math.random() * 2 +1
+                speed: Math.random() * 2 + 1
             }
             clouds.push(cloud);
         }
@@ -53,8 +48,8 @@
             context.strokeRect(0, 0, canvas.width, canvas.height);
 
             // 위에서 내려오는 
-            for (let i = 0; i < clouds.lenght; i++ ) {
-                const cloud = couds[i];
+            for (let i = 0; i < clouds.height; i++ ) {
+                const cloud = clouds[i];
                 context.drawImage(image2, cloud.x, cloud.y, 60, 60);
                 cloud.y += cloud.speed;
 
@@ -66,10 +61,9 @@
                 
             }
 
-            cloud.x += cloud.speed;
-            if (cloud.x > canvas.height) {
-                cloud.x = 0;
-                cloud.y = Math.random() * (canvas.width - 60);
+            // 플레이어 노출
+            if (player.x > canvas.width) {
+                player.x = -60;
             }
 
             requestAnimationFrame(draw); // 반복에니메이션
