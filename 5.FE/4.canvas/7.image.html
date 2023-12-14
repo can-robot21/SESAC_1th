@@ -33,7 +33,7 @@
         }
 
         function createcloud() {
-            const clouds = {
+            const cloud = {
                 x: Math.random() * (canvas.width - 60),
                 y: 0, 
                 speed: Math.random() * 2 + 1
@@ -43,18 +43,18 @@
 
 
         function draw() {
-            context.clearRect(0, 0, canvas.width, canvas.height);
+            context.clearRect(0, 0, canvas.width, canvas.heigth);
             context.drawImage(image1, player.x, player.y, 60, 60);
-            context.strokeRect(0, 0, canvas.width, canvas.height);
+            context.strokeRect(0, 0, canvas.width, canvas.heigth);
 
             // 위에서 내려오는 
-            for (let i = 0; i < clouds.height; i++ ) {
+            for (let i = 0; i < clouds.length; i++ ) {
                 const cloud = clouds[i];
                 context.drawImage(image2, cloud.x, cloud.y, 60, 60);
                 cloud.y += cloud.speed;
 
                 // 구름이 캔버스에서 벗어나면 삭제 후 새구름 생성
-                if (cloud.y > canvas.height) {
+                if (cloud.y > canvas.heigth) {
                     clouds.splice(i, 1);
                     createcloud();
                 }

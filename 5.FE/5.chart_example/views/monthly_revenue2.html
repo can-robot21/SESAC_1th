@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>월간 매출액</h1>
+    <canvas id="revenueChart"></canvas>
+    <script>
+        fetch('/api/cart-data')
+        .then(response => response.json())
+        .then(chartData => {
+            console.log(chartData.labels, chartData.revenues);
+
+            var ctx = document.getElementById('mychart')
+            var revenueChart = new Chart(ctx, {
+                type: 'line',
+                datasets: [{
+                    label: 'Monthly Revenue',
+                    data: chartData.revenues,
+                    backgroundColor: 'rgb(75, 192, 192, 1),
+                    borderColor: 'rgb(75, 192, 192, 1)'
+                    borderWidth: 1
+                }]                
+            }, 
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            });
+        })
+        
+        var labels = {{ labels }};
+        var revenues = {{ revenues }};
+        console.log()
+    </script>
+</body>
+</html>
