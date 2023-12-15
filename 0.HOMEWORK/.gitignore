@@ -1,6 +1,7 @@
 ## 파일
 *.bin
 *.bak
+.env
 
 ## 폴더
 images/

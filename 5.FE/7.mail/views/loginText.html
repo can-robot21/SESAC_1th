@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>회원 가입</h2>
+    <div id="loginmail">
+        <form>
+            <label for="loginText">인증코드 | </label>
+            <input type="text" id="loginText" name="enteredCode">
+            <button type="button" id="checkCodeButton">인증 코드 확인</button>
+        </form>
+    </div>
+    <div id="guestPass">
+        <h2 id="guestMessage"></h2>
+    </div>
+
+    <div id="Welcome">
+        <h2 id='welcomeMessage'></h2>
+    </div>
+
+    <script>
+        document.getElementById("checkCodeButton").addEventListener("click", function() {
+            const enteredCode = document.getElementById("loginText").value;
+            const guestMessage = document.getElementById("loginText");
+            guestMessage.textContent = "입력된 암호:0 + enteredCode";
+            const xhr = new XMLHttpRequest();
+            console.log(xhr);
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        const response = JSON.parse(xhr.responseText);
+                        const welcomeMessage = document.getElementById("welcomeMessage");
+
+                        if (response.welcome) {
+                            welcomeMessage.textContent = "회원인증 완료!!";
+                        } else {
+                            welcomeMessage.textContent = "회원인증 실패!!";
+                        }
+                    } else {
+                        console.log("서버 오류" + xhr.status);
+                    }
+                }
+            };
+
+            xhr.open("POST", "/loginText");
+            xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+            xhr.send(JSON.stringify({ enteredCode }));
+        });
+    </script>
+</body>
+</html>
