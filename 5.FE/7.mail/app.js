@@ -57,9 +57,9 @@ app.post('/loginText', (req, res) => {
     const storedCode = req.session.randomCode;
     
     if (enteredCode === storedCode) {
-        res.render('loginText', { welcome: true });
+        res.json({ welcome: true }); 
     } else {
-        res.render('loginText', { welcome: false });
+        res.json({ welcome: false }); 
     }
 });
 
@@ -87,4 +87,4 @@ function generateRandomCode(length) {
 
 app.listen(port, () => {
     console.log("서버 레디");
-});
+})
