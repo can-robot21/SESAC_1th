@@ -28,13 +28,15 @@
             const guestMessage = document.getElementById("loginText");
             guestMessage.textContent = "입력된 암호:" + enteredCode;
             const xhr = new XMLHttpRequest();
-            console.log(xhr);
+            console.log('전달받은 텍스:',xhr);
 
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === 4) {
                     if (xhr.status === 200) {
                         const response = JSON.parse(xhr.responseText);
+                        console.log('json:', response);
                         const welcomeMessage = document.getElementById("welcomeMessage");
+                        console.log('welcome:', welcomeMessage);
 
                         if (response.welcome) {
                             welcomeMessage.textContent = "회원인증 완료!!";
