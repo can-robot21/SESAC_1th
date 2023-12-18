@@ -22,36 +22,42 @@
         <h2 id='welcomeMessage'></h2>
     </div>
 
+    <div id="ErrorMessage">
+        <h2 id='errorMessage'></h2>
+    </div>
+
     <script>
-        document.getElementById("checkCodeButton").addEventListener("click", function() {
+        document.getElementById("checkCodeButton").addEventListener("click", async function() {
             const enteredCode = document.getElementById("loginText").value;
-            const guestMessage = document.getElementById("loginText");
-            guestMessage.textContent = "입력된 암호:" + enteredCode;
             const xhr = new XMLHttpRequest();
-            console.log('전달받은 텍스:',xhr);
-
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4) {
-                    if (xhr.status === 200) {
-                        const response = JSON.parse(xhr.responseText);
-                        console.log('json:', response);
-                        const welcomeMessage = document.getElementById("welcomeMessage");
-                        console.log('welcome:', welcomeMessage);
-
-                        if (response.welcome) {
-                            welcomeMessage.textContent = "회원인증 완료!!";
-                        } else {
-                            welcomeMessage.textContent = "회원인증 실패!!";
-                        }
-                    } else {
-                        console.log("서버 오류" + xhr.status);
-                    }
-                }
-            };
-
             xhr.open("POST", "/loginText");
             xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
             xhr.send(JSON.stringify({ enteredCode }));
+
+            xhr.onreadystatechange = function() {
+
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        const response = JSON.parse(xhr.responseText);
+                        console.log('전송된 데이터:', response);
+
+                        const welcomeMessage = document.getElementById("welcomeMessage");
+                        const errorMessage = document.getElementById("errorMessage");
+
+                        if (response.welcome) {
+                            welcomeMessage.textContent = "회원 인증 완료!!";
+                            errorMessage.textContent = "";
+                        } else {
+                            welcomeMessage.textContent = "회원 인증 실패!!";
+                            errorMessage.textContent = "에러 메시지: " + response.error;
+                        }
+                    } else {
+                        console.log("서버 오류" + xhr.status);
+                        const errorMessage = document.getElementById("errorMessage");
+                        errorMessage.textContent = "서버 오류 발생";
+                    }
+                }
+            };
         });
     </script>
 </body>

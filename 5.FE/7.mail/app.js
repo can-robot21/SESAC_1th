@@ -55,12 +55,16 @@ app.post('/login', (req, res) => {
 app.post('/loginText', (req, res) => {
     const enteredCode = req.body.enteredCode;
     const storedCode = req.session.randomCode;
-    
+    let response = {};
+
     if (enteredCode === storedCode) {
-        res.json({ welcome: true }); 
+        response.welcome = true;
     } else {
-        res.json({ welcome: false }); 
+        response.welcome = false;
+        response.error = "인증 코드가 올바르지 않습니다.";
     }
+
+    res.json(response);
 });
 
 // naver 메일설정
