@@ -1,6 +1,7 @@
 const express = require("express");
 const nunjucks = require("nunjucks");
-const path = require("morgan");
+const path = require("path");
+const morgan = require("morgan");
 
 const app =  express();
 const port = 3000;
