@@ -1,43 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>웹소켓1</title>
     <style>
-        #messageContainer { 
+        #messageContainer {
             height: 200px;
             overflow-y: scroll;
             border: 1px solid;
-            padding: auto;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
         }
 
         .messageBubble {
+            display:flex;
+            flex-direction: column;
             max-width: 70%;
             padding: 8px;
-            border-radius: 10px;
+            border-radius: 5px;
+            word-wrap: break-word;
         }
 
-        .sentMessage {
-            background-color: goldenrod;
+        .sentMessage {   
+            display: block;         
+            background-color: yellow;
+            text-align: left;
+            margin-bottom: 10px;
+            align-self: flex-end;
+            padding: 5px;
+            border-radius: 5px;
+        }
+
+        .receivedMessage {
+            display: block;  
+            background-color: rgb(255, 147, 179);
             text-align: right;
             margin-bottom: 10px;
-            float: right;
-            align-self: baseline;
+            align-self: flex-start;
+            padding: 5px;
+            border-radius: 5px;
         }
-        .receivedMessage {
-            background-color: azure;
-        }
-
-
     </style>
 </head>
+
 <body>
     <div id="messageContainer"></div>
     <input id="inputMessage" type="text"></input>
     <button id="sendButton">전송</button>
 
-    <script>        
+    <script>
         const socket = new WebSocket('ws://127.0.0.1:3000/chat');
         <!-- const socket = new WebSocket('ws://192.168.100.123:8080'); -->
 
@@ -48,56 +62,57 @@
         socket.addEventListener('open', (event) => {
             console.log('서버에 연결되었습니다.');
             // 사용자 이름받아 서버에 전달
-            const username = prompt('이름 입력');
+            username = prompt('이름 입력');
             socket.send(JSON.stringify({ type: 'session', username: username }));
         });
 
         // 화면에 메시지 표시
         socket.addEventListener('message', (event) => {
-            const message = event.data;
-            displayMessage(message); // 여기에 추가
-        })
+            const messageObj = JSON.parse(event.data);
+            console.log("메시지 화면표시:", messageObj);
+            displayMessage(messageObj); // 여기에 추가
+        });
 
         // 서버로 메시지 보내는 코드
+
         document.getElementById('sendButton').addEventListener('click', () => {
             const inputField = document.getElementById('inputMessage');
             const message = inputField.value;
             inputField.value = '';
-            sendMessage(message);
-        })
+            sendMessage(message, username); // Pass 'message' here
+        });
 
-        function sendMessage(message) {            
-                        // JSON 객체로 메시지 전송
-                        const messageObj = { content: message };
-                        socket.send(JSON.stringify(messageObj));
-
-        }
-        
 
         //메시지 전송 함수
-         function sendMessage(message) {
+        function sendMessage(message) {
             console.log('메시지:', message);
-            const messageObj = { content: message };
-
+            const messageObj = { type: 'sent', username: username, content: message };
             socket.send(JSON.stringify(messageObj));
-         }
+        }
 
-         //  메시지 출력 함수
-         function displayMessage(message) {
+        //  메시지 출력 함수
+        function displayMessage(messageObj) {
             const messageContainer = document.getElementById('messageContainer');
             const messageElement = document.createElement('div');
 
             // 메시지 타입에 따라 클래스 추가
-            if (message.type === 'sent') {
+            messageElement.classList.add('messageBubble');
+            if (messageObj.type === 'sent') {
                 messageElement.classList.add('sentMessage');
-            } else if (message.type === 'received') {
+            } else if (messageObj.type === 'received') {
                 messageElement.classList.add('receivedMessage');
             }
 
             // 메시지 내용 표시하기
-            messageElement.textContent = message.content;
+            console.log('메시지 내용:', messageObj);
+            messageElement.innerText = `${messageObj.username}: ${messageObj.content}`;
             messageContainer.appendChild(messageElement);
-         }
+
+            // Scroll to the bottom
+            messageContainer.scrollTop = messageContainer.scrollHeight;
+        }
+
     </script>
 </body>
+
 </html>

@@ -1,6 +1,6 @@
 const express = require('express');
 const expressWs = require('express-ws');
-const WebSocket = require('websocket');
+const WebSocket = require('ws');
 const path = require('path');
 
 const port = 3000;
@@ -44,16 +44,17 @@ app.ws('/chat', (ws, req) => {
         // 모든 클라이언트에게 재전송
         if (messageType !== 'session' ) {
             wsClients.forEach((client, clientUsername ) => {
-                console.log(client.username);
+                console.log('메시지?',parsedMessage);
 
                 const messageObj = {
                     type: client === ws ? 'sent' : 'received',
-                    constent: parsedMessage.content,
-                    usernamet: username 
+                    content: parsedMessage.content,
+                    username: username 
                 }
         
                 if (client.readyState === WebSocket.OPEN) {
                     client.send(JSON.stringify(messageObj));
+
                 }
             });
         }
