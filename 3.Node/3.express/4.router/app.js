@@ -17,8 +17,7 @@ app.get('/', (req, res) =>{
     res.send('메인 페이지');
 });
 
-
-
+// 서버준비
 app.listen(port, (req, res) => {
     console.log('준비');
 });
