@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>JavaScript 이미지 메타데이터</title>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/exif-js"></script>
+</head>
+
+<body>
+    <img src="image1.jpg" id="img1" data-latitude="37.54699" data-longitude="127.09598" width="200px">
+    <pre>Make and model: <span id="makeAndModel1"></span></pre>
+    <p>위도: <span id="latitude1"></span>, 경도: <span id="longitude1"></span></p>
+    <br />
+    <img src="image2.jpg" id="img2" data-latitude="37.55377" data-longitude="127.06537" width="200px">
+    <pre>Make and model: <span id="makeAndModel2"></span></pre>
+    <p>위도: <span id="latitude2"></span>, 경도: <span id="longitude2"></span></p>
+
+    <br />
+    <div id="map" style="width: 100%; height: 500px;"></div>
+
+    <script type="text/javascript"
+        src="http://dapi.kakao.com/v2/maps/sdk.js?appkey=12b341e387e9fd06c69d02f405bbdcfb"></script>
+    <script>
+        var mapContainer = document.getElementById('map'); // 지도를 표시할 div 
+        var mapOption = {
+            center: new kakao.maps.LatLng(37.54699, 127.09598), // 지도의 중심좌표
+            level: 3 // 지도의 확대 레벨
+        };
+
+        var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+        var images = document.querySelectorAll('img[data-latitude][data-longitude]');
+
+        images.forEach(function (image, index) {
+            var latitude = parseFloat(image.getAttribute('data-latitude'));
+            var longitude = parseFloat(image.getAttribute('data-longitude'));
+
+            var imageSrc = './public/images/marker_truck.png', // 마커이미지의 주소입니다    
+                imageSize = new kakao.maps.Size(64, 69), // 마커이미지의 크기입니다
+                imageOption = { offset: new kakao.maps.Point(27, 69) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+
+            // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
+            var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption),
+                markerPosition = new kakao.maps.LatLng(latitude, longitude); // 이미지의 데이터 속성에서 가져온 위치로 변경
+
+            // 마커를 생성합니다
+            var marker = new kakao.maps.Marker({
+                position: markerPosition,
+                image: markerImage // 마커이미지 설정 
+            });
+            // 마커 지도위 표기
+            marker.setMap(map);
+
+            // 위도에 경도를 해당 이미지 아래에 표시 합니다.
+            var latitudeSpanId = 'latitude' + (index + 1);
+            var longitudeSpanId = 'longitude' + (index + 1);
+            document.getElementById(latitudeSpanId).textContent = latitude;
+            document.getElementById(longitudeSpanId).textContent = longitude;
+
+            // You can also get EXIF data if needed
+            // EXIF.getData(image, function () {
+            //     var make = EXIF.getTag(this, "Make");
+            //     var model = EXIF.getTag(this, "Model");
+            //     var makeAndModelSpanId = 'makeAndModel' + (index + 1);
+            //     document.getElementById(makeAndModelSpanId).textContent = `${make} ${model}`;
+            // });
+        });
+    </script>
+</body>
+
+</html>
