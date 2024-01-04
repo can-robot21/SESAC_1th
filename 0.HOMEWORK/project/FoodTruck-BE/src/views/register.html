@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="kor">
+
+<head>
+    <meta charset="UTF-8">
+    <title>매장 등록</title>
+</head>
+
+<body>
+    <h1>매장 등록</h1>
+    <table border="1">
+        <tr>
+            <td widht="400">
+                
+                    <form id="registerForm" enctype="multipart/form-data">
+                        <table>
+                            <tr>
+                                <td>
+                                    <h3>위도 경도로 부근 10m 내의 매장 검색해 기존 매장과 중복 확인</h3>
+                                    <label for="latitude">위도:</label>
+                                    <input type="text" id="latitude" name="latitude" required value="37.557121"><br>
+                
+                                    <label for="longitude">경도:</label>
+                                    <input type="text" id="longitude" name="longitude" required value="127.079542"><br><br>
+                                    <button>위치입력</button>
+                                </td>
+                            </tr>
+                        </table>
+                        <table>
+                            <tr>
+                                <td>
+                                    <hr>
+                                    <label for="category">분류</label>
+                
+                                    <select name="job">
+                                        <option value="">매장분류</option>
+                                        <option value="학생">간식</option>
+                                        <option value="회사원" selected="selected">붕어빵</option>
+                                        <option value="기타">분식</option>
+                                        <option value="기타"></option>
+                                        <option value="기타">기타</option>
+                                    </select>
+                                    <br>
+                                    <br>
+                                    <label for="storename">상호</label><input type="text" name="location" id=""
+                                        value="장안평 붕어빵(자동입력)"><br><br>
+                                    <label for="영업시간">영업시간</label><input type="text" name="location" id="" value="10:00 AM ~ 09:00 PM"
+                                        ><br><br>
+                                    <label for="location">위치(주소)</label><input type="text" name="location" id=""
+                                        value="카카도맵 클릭으로 자동입력" readonly><br><br>
+                                    <button>추가정보입력</button>
+                                </td>
+                            </tr>
+                        </table>
+                        <table>
+                            <tr>
+                                <td>
+                                    <hr>
+                                    <h4>(선택)매장인근에서찍은 사진 업데이트시 인증매장마크</h3>
+                                        <label for="image">매장 사진:</label>
+                                        <input type="file" id="image" name="image" accept="image/*" required><br><br>
+                                        <button>사진으로 추가 인증</button>
+                                </td>
+                            </tr>
+                        </table><br><hr><br>
+                
+                    </form>
+                    
+                </td>
+            </tr>
+        </table><br><br>
+        <input type="submit" value="매장 등록">
+
+    <script src="./register.js"></script>
+</body>
+
+</html>
