@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const nunjucks = require('nunjucks');
+const exif = require('exif')
 
 // 라우트 모듈
 const mainRoutes = require('./routes/mainRoutes');
