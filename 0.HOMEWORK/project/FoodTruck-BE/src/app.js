@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const nunjucks = require('nunjucks');
 const getConnection = require('./middleware/database');
+const cors = require('cors');
 
 const app = express();
 
@@ -11,10 +12,14 @@ const registerRoutes = require('./routes/registerRoutes');
 const purchaseRoutes = require('./routes/purchaseRoutes');
 const mypageRoutes = require('./routes/mypageRoutes');
 const memberRoutes = require('./routes/memberRoutes');
-const memberApiRoutes = require('./routes/memberApiRoutes');
-const calculateRoutes = require('./routes/calculateRoutes'); // 새로 생성된 라우트 모듈
+const memberApiRoutes = require('./routes/memberApiRoutes'); // 맴버의 like, report(신고), review, rate, favorite 리스트
+const calculateRoutes = require('./routes/calculateRoutes'); // 위도+경도+거리 로 매장리스트+거리 제공 api
 
 app.use(express.static('public'));
+app.use(cors({
+    origin: ['localhost:3000', 'http://aws.amazon.com'],
+    credentials: true // 서버로 쿠키나 인증정보 요청시 필요한 설정
+}))
 
 app.set('view engine', 'html');
 nunjucks.configure(path.join(__dirname, 'views'), {
