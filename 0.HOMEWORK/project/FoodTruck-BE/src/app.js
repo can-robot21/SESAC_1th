@@ -17,7 +17,7 @@ const calculateRoutes = require('./routes/calculateRoutes'); // 위도+경도+�
 
 app.use(express.static('public'));
 app.use(cors({
-    origin: ['localhost:3000', 'http://aws.amazon.com'],
+    origin: ['localhost:3000', 'localhost:5000', 'http://aws.amazon.com'],
     credentials: true // 서버로 쿠키나 인증정보 요청시 필요한 설정
 }))
 

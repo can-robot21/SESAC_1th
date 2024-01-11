@@ -10,7 +10,7 @@ const calculateDistance = (lat1, lon1, lat2, lon2) => {
               Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) * 
               Math.sin(dLon / 2) * Math.sin(dLon / 2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    return radius * c; // Distance in km
+    return radius * c * 1000; // Distance in meters
 };
 
 router.get("/:latitude/:longitude/:distance/:categoryId?", async (req, res) => {
@@ -32,7 +32,8 @@ router.get("/:latitude/:longitude/:distance/:categoryId?", async (req, res) => {
     const maxLong = longitude + longDiff;
 
     let query = `
-        SELECT *, latitude, longitude
+        SELECT store.*, latitude, longitude, 
+               (SELECT GROUP_CONCAT(itemname) FROM item WHERE item.storeno = store.storeno) AS menu
         FROM store
         WHERE latitude BETWEEN ? AND ?
         AND longitude BETWEEN ? AND ?
@@ -54,8 +55,9 @@ router.get("/:latitude/:longitude/:distance/:categoryId?", async (req, res) => {
         // Calculate distance for each store and add it to the response
         const storesWithDistance = rows.map(store => {
             const interval = calculateDistance(latitude, longitude, store.latitude, store.longitude);
-            return { ...store, interval };
+            return { ...store, interval }; // 'interval' now represents the distance in meters
         });
+
         console.log(storesWithDistance);
 
         res.json(storesWithDistance);
