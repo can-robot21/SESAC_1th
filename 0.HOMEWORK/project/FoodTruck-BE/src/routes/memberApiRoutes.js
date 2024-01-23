@@ -1,72 +1,64 @@
 const express = require('express');
 const router = express.Router();
 
-// 회원 ID를 기준으로 review 조회
-router.get('/member/:id/review', async (req, res) => {
-    try {
-        const memberId = req.params.id;
-        const query = 'SELECT * FROM review WHERE id = ?';
-        const [reviews] = await req.connection.query(query, [memberId]);
-        console.log(reviews);
-        res.json(reviews);
-    } catch (error) {
-        console.error("Database error in review:", error);
-        res.status(500).json({ error: "Database error" });
-    }
-});
+// 회원 ID를 기준으로 옵션(like, review, report, rate, favorite 데이터 조회)
+// 옵션은 &option={옵션1}&option={옵션2}.... 형식
+router.get('/memberapi', async (req, res) => {
+    const memberId = req.query.member;
+    const options = Array.isArray(req.query.option) ? req.query.option : [req.query.option];
 
-// 회원 ID를 기준으로 report 조회
-router.get('/member/:id/report', async (req, res) => {
     try {
-        const memberId = req.params.id;
-        const query = 'SELECT * FROM report WHERE id = ?';
-        const [reports] = await req.connection.query(query, [memberId]);
-        console.log(reports);
-        res.json(reports);
-    } catch (error) {
-        console.error("Database error in report:", error);
-        res.status(500).json({ error: "Database error" });
-    }
-});
+        const buildQuery = (tableName) => {
+            // Use backticks for table names to avoid issues with reserved keywords
+            return `SELECT * FROM \`${tableName}\` WHERE id = ?`;
+        };
 
-// 회원 ID를 기준으로 rate 조회
-router.get('/member/:id/rate', async (req, res) => {
-    try {
-        const memberId = req.params.id;
-        const query = 'SELECT * FROM rate WHERE id = ?';
-        const [rates] = await req.connection.query(query, [memberId]);
-        console.log(rates);
-        res.json(rates);
-    } catch (error) {
-        console.error("Database error in rate:", error);
-        res.status(500).json({ error: "Database error" });
-    }
-});
+        let results = {};
 
-// 회원 ID를 기준으로 like 조회
-router.get('/member/:id/like', async (req, res) => {
-    try {
-        const memberId = req.params.id;
-        const query = 'SELECT * FROM `like` WHERE id = ?';
-        const [likes] = await req.connection.query(query, [memberId]);
-        console.log(likes);
-        res.json(likes);
-    } catch (error) {
-        console.error("Database error in like:", error);
-        res.status(500).json({ error: "Database error" });
-    }
-});
+        for (let opt of options) {
+            let query;
+            switch (opt) {
+                case 'like':
+                    query = buildQuery('like'); // Enclosed in backticks
+                    break;
+                case 'favorite':
+                    query = buildQuery('favorite');
+                    break;
+                case 'review':
+                    query = buildQuery('review');
+                    break;
+                case 'report':
+                    query = buildQuery('report');
+                    break;
+                case 'rate':
+                    query = buildQuery('rate');
+                    break;
+                default:
+                    continue;
+            }
 
-// 회원 ID를 기준으로 favorite 조회
-router.get('/member/:id/favorite', async (req, res) => {
-    try {
-        const memberId = req.params.id;
-        const query = 'SELECT * FROM favorite WHERE id = ?';
-        const [favorites] = await req.connection.query(query, [memberId]);
-        console.log(favorites);
-        res.json(favorites);
+            console.log(`Executing query: ${query} with memberId: ${memberId}`);
+            const [rows] = await req.dbConnection.query(query, [memberId]);
+            console.log(`Query results: `, rows);
+
+            if (rows.length > 0) {
+                results[opt] = rows.map(row => {
+                    let tableRow = {};
+                    for (let [key, value] of Object.entries(row)) {
+                        tableRow[key] = value;
+                    }
+                    return tableRow;
+                });
+            }
+        }
+
+        if (Object.keys(results).length === 0) {
+            return res.status(404).json({ error: "No data" });
+        }
+
+        res.json(results);
     } catch (error) {
-        console.error("Database error in favorite:", error);
+        console.error("Database error:", error);
         res.status(500).json({ error: "Database error" });
     }
 });

@@ -13,11 +13,11 @@ const calculateDistance = (lat1, lon1, lat2, lon2) => {
     return radius * c * 1000; // Distance in meters
 };
 
-router.get("/:latitude/:longitude/:distance/:categoryId?", async (req, res) => {
-    const latitude = parseFloat(req.params.latitude);
-    const longitude = parseFloat(req.params.longitude);
-    const distance = parseFloat(req.params.distance);
-    const categoryId = req.params.categoryId;
+router.get("/calculate", async (req, res) => {
+    const latitude = parseFloat(req.query.latitude);
+    const longitude = parseFloat(req.query.longitude);
+    const distance = parseFloat(req.query.distance);
+    const categoryId = req.query.categoryId;
 
     if (isNaN(latitude) || isNaN(longitude) || isNaN(distance)) {
         return res.status(400).json({ error: "Invalid input parameters" });
@@ -45,12 +45,12 @@ router.get("/:latitude/:longitude/:distance/:categoryId?", async (req, res) => {
     if (categoryId) {
         query += ' AND categoryId = ?';
         queryParams.push(categoryId);
-    }
+    };
 
     query += ' LIMIT 10;';
 
     try {
-        const [rows] = await req.connection.query(query, queryParams);
+        const [rows] = await req.dbConnection.query(query, queryParams);
 
         // Calculate distance for each store and add it to the response
         const storesWithDistance = rows.map(store => {
@@ -58,7 +58,7 @@ router.get("/:latitude/:longitude/:distance/:categoryId?", async (req, res) => {
             return { ...store, interval }; // 'interval' now represents the distance in meters
         });
 
-        console.log(storesWithDistance);
+        console.log(storesWithDistance);        
 
         res.json(storesWithDistance);
     } catch (error) {
