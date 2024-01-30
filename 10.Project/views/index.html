@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이미지 업로드 게시판</title>
+</head>
+<body>
+    <h1>게시판</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>번 호</th>
+                <th>제 목</th>
+                <th>내 용</th>
+                <th>작성일</th>
+                <th>삭제</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for post in posts %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ post.title }}</td>
+                <td>{{ post.content }}</td>
+                <td>
+                    {% if post.imageUrl %}
+                    <img src="{{ post.imageUrl }}" alt="Uploaded Image">
+                    {% else %}
+                    (없음)
+                    {% endif %}
+                </td>
+                <!-- <td>{{ post.date }}</td> -->
+                <td>{{ post.date | formatPostDate }}</td>  <-- 사용자 정의
+                <td>
+                    <form action="/delete/{{ loop.index }}" method="post">
+                        <button type="submit">삭제</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="/write">글 작성</a>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게시글 작성</title>
+</head>
+<body>
+     <h1>글 작성</h1>
+     <form action="/write" method="post">
+        <label for="title">제 목</label>
+        <input type="text" id="title" name="title"><br>
+        <label for="content">내 용</label>
+        <input type="text" id="content" name="content"><br>
+        <label for="image">이미지 업로드</label>
+        <input type="file" id="image" name="image"><br>
+        <button type="submit">작 성</button>
+     </form>
+</body>
+</html>
