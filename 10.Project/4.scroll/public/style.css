@@ -1,0 +1,9 @@
+        /* 스타일 추가 */
+        .rounded-box {
+            width: 100%;
+            height: 20px;
+            background-color: lightblue;
+            border: 1px solid blue;
+            margin-bottom: 10px;
+            /* 각 박스 사이의 간격 조정 */
+        }
