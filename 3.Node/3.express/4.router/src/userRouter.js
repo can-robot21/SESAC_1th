@@ -17,4 +17,4 @@ router.get('/setting', (req, res) => {
     res.send('사용자 설정');
 });
 
-module.exports = router;
+module.exports = router
